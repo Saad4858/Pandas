@@ -21,7 +21,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    print("Hello World  ")
+    print("Hello World ")
     return {"message": "Hello World"}
 
 @app.get('/translatedResponseUser')
