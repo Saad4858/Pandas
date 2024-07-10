@@ -12,3 +12,5 @@ psycopg2
 PyPDF2
 pyTelegramBotAPI
 schedule
+requests
+beautifulsoup4
