@@ -22,13 +22,20 @@ def addUser(name, address, phone, city, country, language):
     # Close the session
     session.close()
 
-def addReadingRecord(record):
+def addReadingRecord(pH, nitrogen, phosphorous, potassium, temperature, moisture, conductivity, battery):
     engine = getEngine()
     Session = sessionmaker(bind=engine)
 
     session = Session()
 
-    new_reading = Reading(**record)
+    new_reading = Reading(
+        pH=pH, nitrogen=nitrogen, 
+        phosphorous=phosphorous, 
+        potassium=potassium, 
+        temperature=temperature, 
+        moisture=moisture, 
+        conductivity=conductivity, 
+        battery=battery)
 
     session.add(new_reading)
 
