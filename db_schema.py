@@ -64,14 +64,14 @@ class Reading(Base):
     id = Column(Integer, primary_key=True)
 
     user_id = Column(Integer, ForeignKey('users.id'))
-    timestamp = Column(DateTime)
-    humidity = Column(Float)
     pH = Column(Float)
     nitrogen = Column(Float)
     phosphorus = Column(Float)
     potassium = Column(Float)
     temperature = Column(Float)
-    rainfall = Column(Float)
+    moisture = Column(Float)
+    conductivity = Column(Float)
+    battery = Column(Float)
 
     # Timestamps
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))

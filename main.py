@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import openai
 import requests
+from db_controllers import addReadingRecord, addUser, get10ReadingRecords
 
 
 load_dotenv()
