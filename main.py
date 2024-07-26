@@ -31,7 +31,7 @@ async def get_translated_response(user_prompt: str , language: str):
 
         
        
-        records = "IOT Data"
+        records = get10ReadingRecords()
         context = "Context of the user's farmland"
         context  = context +"\n"+"Considering the weather conditions \n" 
         context = context + "\n" 
