@@ -29,8 +29,9 @@ def addReadingRecord(pH, nitrogen, phosphorous, potassium, temperature, moisture
     session = Session()
 
     new_reading = Reading(
-        pH=pH, nitrogen=nitrogen, 
-        phosphorous=phosphorous, 
+        pH=pH, 
+        nitrogen=nitrogen, 
+        phosphorus=phosphorous, 
         potassium=potassium, 
         temperature=temperature, 
         moisture=moisture, 
