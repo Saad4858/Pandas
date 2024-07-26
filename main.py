@@ -70,6 +70,16 @@ async def get_translated_response(user_prompt: str , language: str):
     except Exception as e:
         print(e)
         return {'message':'failure getting latest message'}
+    
+
+@app.post('/addReadingRecord')
+async def add_reading_record(pH: float, nitrogen: float, phosphorous: float, potassium: float, temperature: float, moisture: float, conductivity: float, battery: float, user_id: int):
+    try:
+        addReadingRecord(pH, nitrogen, phosphorous, potassium, temperature, moisture, conductivity, battery, user_id)
+        return {'message':'success'}
+    except Exception as e:
+        print(e)
+        return {'message':'failure adding reading record'}
 
 
 
