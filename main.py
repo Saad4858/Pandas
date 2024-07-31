@@ -5,6 +5,8 @@ import openai
 import requests
 from db_controllers import addReadingRecord, addUser, get10ReadingRecords
 
+from weather_api import get_current_weather_data , get_forecast
+
 
 load_dotenv()
 
@@ -32,9 +34,16 @@ async def get_translated_response(user_prompt: str , language: str):
         
        
         records = get10ReadingRecords()
+
+        current_weather_data = get_current_weather_data("Lahore")
+
+        forecast , six_hour_forecast = get_forecast("Lahore",3)
+
         context = "Context of the user's farmland"
-        context  = context +"\n"+"Considering the weather conditions \n" 
-        context = context + "\n" 
+        context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
+        context = context + "\n" + six_hour_forecast
+
+
         completion_response = OPENAI_CLIENT.chat.completions.create(
             model = 'gpt-3.5-turbo',
             messages=[
