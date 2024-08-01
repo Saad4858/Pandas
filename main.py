@@ -43,35 +43,57 @@ async def get_translated_response(user_prompt: str , language: str):
         context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
         context = context + "\n" + six_hour_forecast
 
-
-        completion_response = OPENAI_CLIENT.chat.completions.create(
-            model = 'gpt-3.5-turbo',
-            messages=[
-                {"role": "system", "content": f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}"},
-                {"role": "user", "content": f"{user_prompt}"}
-            ]
+        message = OPENAI_CLIENT.beta.threads.messages.create(
+        thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0",
+        role="user",
+        content=f"{user_prompt}"
         )
 
-        response = completion_response.choices[0].message.content
-
-        users_language = language
-
-        # Translating Response To Local Language of User (Pulled From DB)
-        translated_response = OPENAI_CLIENT.chat.completions.create(
-            model = 'gpt-3.5-turbo',
-            messages=[
-                {"role": "system", "content": f"You are a helpful assistant who has great knowledge of languages. You translate English to local languages for farmers in Pakistan."},
-                {"role": "user", "content": f"Translate the following {response} into {users_language} language."}
-            ]
+        run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
+        thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0",
+        assistant_id="asst_osvt9lAtJC3oxsI7CQJ2r3GO",
+        instructions="Please address the user as Saad. The user has a premium account."
         )
 
-        print(f"You asked: {user_prompt}")
-        print(f"Response: {translated_response.choices[0].message.content}")
+        if run.status == 'completed': 
+            messages = OPENAI_CLIENT.beta.threads.messages.list(
+            thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0"
+        )
+            print(messages.data[0].content[0].text.value)
+            response = (messages.data[0].content[0].text.value)
+        # print(messages)
+        else:
+            print(run.status)
+
+
+
+        # completion_response = OPENAI_CLIENT.chat.completions.create(
+        #     model = 'gpt-3.5-turbo',
+        #     messages=[
+        #         {"role": "system", "content": f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}"},
+        #         {"role": "user", "content": f"{user_prompt}"}
+        #     ]
+        # )
+
+        # response = completion_response.choices[0].message.content
+
+        # users_language = language
+
+        # # Translating Response To Local Language of User (Pulled From DB)
+        # translated_response = OPENAI_CLIENT.chat.completions.create(
+        #     model = 'gpt-3.5-turbo',
+        #     messages=[
+        #         {"role": "system", "content": f"You are a helpful assistant who has great knowledge of languages. You translate English to local languages for farmers in Pakistan."},
+        #         {"role": "user", "content": f"Translate the following {response} into {users_language} language."}
+        #     ]
+        # )
+
+        # print(f"You asked: {user_prompt}")
+        # print(f"Response: {translated_response.choices[0].message.content}")
         
 
         return { 'user_prompt': f'{user_prompt}',
                  'original_response': f'{response}',
-                 'translated_response': f'{translated_response.choices[0].message.content}',
                  'context' : f'{context}',
                  'IOT Rows': f'{records}'
                  }
