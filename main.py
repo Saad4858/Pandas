@@ -61,6 +61,8 @@ async def get_translated_response(user_prompt: str , language: str):
         )
             print(messages.data[0].content[0].text.value)
             response = (messages.data[0].content[0].text.value)
+            
+            addConversation(1, user_prompt, response)
         # print(messages)
         else:
             print(run.status)
@@ -90,6 +92,7 @@ async def get_translated_response(user_prompt: str , language: str):
 
         # print(f"You asked: {user_prompt}")
         # print(f"Response: {translated_response.choices[0].message.content}")
+        
         
 
         return { 'user_prompt': f'{user_prompt}',
