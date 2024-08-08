@@ -1,4 +1,4 @@
-from db_schema import User, Reading, getEngine
+from db_schema import User, Reading, Message, getEngine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import desc
 
@@ -63,3 +63,49 @@ def get10ReadingRecords():
     session.close()
 
     return dict_results
+
+def addConversation(user_id, message, response):
+    # Setup the engine and session
+    engine = getEngine()
+    Session = sessionmaker(bind=engine)
+
+    # Create a session
+    session = Session()
+
+    # Create an instance of the Message model
+    new_message = Message(
+        user_id=user_id,
+        message=message,
+        response=response
+    )
+
+    # Add the instance to the session
+    session.add(new_message)
+
+    # Commit the transaction
+    session.commit()
+
+    # Close the session
+    session.close()
+
+def getLanguage(user_id):
+    # Setup the engine and session
+    engine = getEngine()
+    Session = sessionmaker(bind=engine)
+
+    # Create a session
+    session = Session()
+
+    try:
+        # Query the User table for the language of the specified user_id
+        user = session.query(User).filter_by(id=user_id).first()
+
+        # If the user exists, return their language
+        if user:
+            return user.language
+        else:
+            # If the user does not exist, return None or handle accordingly
+            return None
+    finally:
+        # Close the session
+        session.close()

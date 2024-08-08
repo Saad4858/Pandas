@@ -48,8 +48,7 @@ class Message(Base):
 
     user_id = Column(Integer, ForeignKey('users.id'))
     message = Column(String)
-    prompt = Column(String)
-    message_type = Column(String)  
+    response = Column(String)
 
     # Timestamps
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))

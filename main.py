@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 import openai
 import requests
-from db_controllers import addReadingRecord, addUser, get10ReadingRecords
+from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation
 
 from weather_api import get_current_weather_data , get_forecast
 
