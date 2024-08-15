@@ -51,14 +51,14 @@ tools = [
         ),
     ),
     QueryEngineTool(
-        query_engine=wheat_engine,
+        query_engine=cotton_engine,
         metadata=ToolMetadata(
             name="cotton_data",
             description="this gives detailed information about the cotton crop in Pakistan",
         ),
     ),
     QueryEngineTool(
-        query_engine=wheat_engine,
+        query_engine=sugercane_engine,
         metadata=ToolMetadata(
             name="sugercane_data",
             description="this gives detailed information about the sugercane crop in Pakistan",
