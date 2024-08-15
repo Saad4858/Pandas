@@ -14,3 +14,4 @@ pyTelegramBotAPI
 schedule
 requests
 beautifulsoup4
+llama-index

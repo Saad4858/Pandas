@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 import openai
 import requests
-from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID
+from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID, get10ReadingRecordsID
 
 from weather_api import get_current_weather_data , get_forecast
 
@@ -34,8 +34,12 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
     try:
 
         thread_id, user_id = getThreadID(phone)
-       
-        records = get10ReadingRecords()
+
+        # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
+        if (user_id == 3):
+            records = get10ReadingRecordsID(user_id - 1)
+        else:
+            records = get10ReadingRecordsID(user_id)
 
         current_weather_data = get_current_weather_data("Lahore")
 

@@ -22,8 +22,8 @@ def addUser(name, address, phone, city, country, language, thread_id):
 
         # Close the session
         session.close()
-    except:
-        print("Error: Could Not Add User")
+    except Exception as e:
+        print(f"Error: Could Not Add User. Exception: {e}")
 
 def addReadingRecord(pH, nitrogen, phosphorous, potassium, temperature, moisture, conductivity, battery, user_id):
     try: 
@@ -49,9 +49,9 @@ def addReadingRecord(pH, nitrogen, phosphorous, potassium, temperature, moisture
         session.commit()
 
         session.close()
-    except:
-        print("Error: Could Not Add Reading")
-
+    except Exception as e:
+        print(f"Error: Could Not Add Reading. Exception: {e}")
+    
 def get10ReadingRecords():
     try:
         engine = getEngine()
@@ -59,6 +59,35 @@ def get10ReadingRecords():
 
         session = Session()
         query = session.query(Reading).order_by(desc(Reading.created_at)).limit(10)
+
+        # Using with_entities to specify the columns you want as dictionary keys
+        dict_results = [
+            {column.name: getattr(row, column.name) 
+            for column in Reading.__table__.columns}
+            for row in query
+        ]
+
+        session.close()
+
+        return dict_results
+    except Exception as e:
+        print(f"Error: Could Not Get Latest Readings. Exception: {e}")
+        return None
+
+def get10ReadingRecordsID(user_id):
+    try:
+        engine = getEngine()
+        Session = sessionmaker(bind=engine)
+
+        session = Session()
+        
+        # Query to get the latest 10 readings for the specified user_id
+        query = (
+            session.query(Reading)
+            .filter_by(user_id=user_id)
+            .order_by(desc(Reading.created_at))
+            .limit(10)
+        )
 
         # Using `with_entities` to specify the columns you want as dictionary keys
         dict_results = [
@@ -70,8 +99,8 @@ def get10ReadingRecords():
         session.close()
 
         return dict_results
-    except:
-        print("Error: Could Not Get Latest Readings")
+    except Exception as e:
+        print(f"Error: Could Not Get Latest Readings. Exception: {e}")
         return None
 
 def addConversation(user_id, message, response):
@@ -98,8 +127,8 @@ def addConversation(user_id, message, response):
 
         # Close the session
         session.close()
-    except:
-        print("Error: Could Not Add Conversation")
+    except Exception as e:
+        print(f"Error: Could Not Add Conversation. Exception: {e}")
 
 def getLanguage(user_id):
     try:
@@ -121,8 +150,8 @@ def getLanguage(user_id):
         else:
             # If the user does not exist, return None or handle accordingly
             return None
-    except: 
-        print("Error: Could Not Get User Language")
+    except Exception as e: 
+        print(f"Error: Could Not Get User Language. Exception: {e}")
         return None
         
 
@@ -144,6 +173,6 @@ def getThreadID(phone):
             # If the user does not exist, return None or handle accordingly
             print("Error: Could Not Get User Thread")
             return None
-    except:
-        print("Error: Could Not Get User Thread")
+    except Exception as e:
+        print(f"Error: Could Not Get User Thread. Exception: {e}")
         return None
