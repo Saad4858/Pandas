@@ -33,7 +33,7 @@ async def root():
 
 
 @app.get('/transcribeAudio')
-async def transcribe_audio(audio_content:any):
+async def transcribe_audio(audio_content:bytes):
     try:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
             temp_audio_file.write(audio_content)
