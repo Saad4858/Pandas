@@ -4,7 +4,7 @@ import pandas as pd
 
 from llama_index.core.query_engine import PandasQueryEngine
 
-from prompts import new_prompt, instruction_str, context
+
 from note_engine import note_engine
 
 from llama_index.core.tools import QueryEngineTool, ToolMetadata
@@ -72,6 +72,9 @@ tools = [
     #     ),
     # ),
 ]
+
+context = """Purpose: The primary role of this agent is to assist users by providing accurate 
+            information about punnjabs agriculture statistics and details. """
 
 llm = OpenAI(model="gpt-3.5-turbo")
 agent = ReActAgent.from_tools(tools, llm=llm, verbose=True, context=context)
