@@ -4,9 +4,6 @@ import pandas as pd
 
 from llama_index.core.query_engine import PandasQueryEngine
 
-
-from note_engine import note_engine
-
 from llama_index.core.tools import QueryEngineTool, ToolMetadata
 from llama_index.core.agent import ReActAgent
 from llama_index.llms.openai import OpenAI
