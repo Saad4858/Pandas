@@ -175,4 +175,4 @@ def getThreadID(phone):
             return None
     except Exception as e:
         print(f"Error: Could Not Get User Thread. Exception: {e}")
-        return None
+        return None, None
