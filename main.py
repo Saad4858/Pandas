@@ -54,7 +54,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         rag_info = agent.query(user_prompt) # Temporary For Now
 
-        context = "\n" + "The following is additional information: \n" + rag_info + "\n"   
+        context = "\n" + "The following is additional information: \n" + str(rag_info) + "\n"   
 
         message = OPENAI_CLIENT.beta.threads.messages.create(
         thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0",
