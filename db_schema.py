@@ -32,6 +32,7 @@ class User(Base):
     city = Column(String)
     country = Column(String)
     language = Column(String)
+    thread_id = Column(String)
 
     # Timestamps
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))

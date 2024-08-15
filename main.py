@@ -3,15 +3,17 @@ import os
 from dotenv import load_dotenv
 import openai
 import requests
-from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation
+from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID
 
 from weather_api import get_current_weather_data , get_forecast
 
 
 load_dotenv()
 
-
 API_KEY = os.getenv("OPENAI_API_KEY")
+
+
+from RAG.rag_main import agent
 
     
 OPENAI_CLIENT = openai.OpenAI(
@@ -28,10 +30,10 @@ async def root():
     return {"message": "Hello World"}
 
 @app.get('/translatedResponseUser')
-async def get_translated_response(user_prompt: str , language: str):
+async def get_translated_response(user_prompt: str , language: str, phone: str):
     try:
 
-        
+        thread_id, user_id = getThreadID(phone)
        
         records = get10ReadingRecords()
 
@@ -42,6 +44,12 @@ async def get_translated_response(user_prompt: str , language: str):
         context = "Context of the user's farmland"
         context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
         context = context + "\n" + six_hour_forecast
+
+
+
+        rag_info = agent.query(user_prompt) # user_prompt for now
+
+        context = "\n" + "The following is additional information: \n" + rag_info + "\n"   
 
         message = OPENAI_CLIENT.beta.threads.messages.create(
         thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0",
@@ -62,7 +70,7 @@ async def get_translated_response(user_prompt: str , language: str):
             print(messages.data[0].content[0].text.value)
             response = (messages.data[0].content[0].text.value)
             
-            addConversation(1, user_prompt, response)
+            addConversation(user_id, user_prompt, response)
         # print(messages)
         else:
             print(run.status)
