@@ -76,6 +76,11 @@ context = """Purpose: The primary role of this agent is to assist users by provi
 llm = OpenAI(model="gpt-3.5-turbo")
 agent = ReActAgent.from_tools(tools, llm=llm, verbose=True, context=context)
 
+def getRagResponse(query):
+    result = agent.query(query)
+    return result
+
+
 # while (prompt := input("Enter a prompt (q to quit): ")) != "q":
 #     result = agent.query(prompt)
 #     print(result)

@@ -13,7 +13,7 @@ load_dotenv()
 API_KEY = os.getenv("OPENAI_API_KEY")
 
 
-from RAG.rag_main import agent
+from RAG.rag_main import getRagResponse
 
     
 OPENAI_CLIENT = openai.OpenAI(
@@ -50,8 +50,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         context = context + "\n" + six_hour_forecast
 
 
-
-        rag_info = agent.query(user_prompt) # user_prompt for now
+        rag_info = getRagResponse(user_prompt) # Temporary For Now
 
         context = "\n" + "The following is additional information: \n" + rag_info + "\n"   
 
