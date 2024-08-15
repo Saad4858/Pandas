@@ -6,6 +6,8 @@ import requests
 from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID, get10ReadingRecordsID
 
 from weather_api import get_current_weather_data , get_forecast
+import tempfile
+
 
 
 load_dotenv()
@@ -28,6 +30,37 @@ app = FastAPI()
 async def root():
     print("Hello World ")
     return {"message": "Hello World"}
+
+
+@app.get('/transcribeAudio')
+async def transcribe_audio(audio_content:any):
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
+        temp_audio_file.write(audio_content)
+        temp_audio_file_path = temp_audio_file.name
+        
+    print(f"Temporary audio file path: {temp_audio_file_path}") 
+
+    transcript_text = None
+    
+    try:
+        with open(temp_audio_file_path, 'rb') as audio_file:
+            transcription = OPENAI_CLIENT.audio.transcriptions.create(
+                            model="whisper-1", 
+                            file=audio_file
+            )
+
+            transcript_text = transcription.text 
+            print("Transcript:", transcript_text)  
+            
+    except Exception as e:
+        print(f"Error during transcription: {e}")  
+    finally:
+        os.remove(temp_audio_file_path)  
+    
+    
+    return {
+        "transcript": transcript_text
+    }
 
 @app.get('/translatedResponseUser')
 async def get_translated_response(user_prompt: str , language: str, phone: str):
