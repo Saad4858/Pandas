@@ -89,20 +89,20 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         context = "\n" + "The following is additional information: \n" + str(rag_info) + "\n"   
 
         message = OPENAI_CLIENT.beta.threads.messages.create(
-        thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0",
+        thread_id="thread_DhsagTkBRpb2DBzFTdViKcOs",
         role="user",
         content=f"{user_prompt}"
         )
 
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
-        thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0",
+        thread_id="thread_DhsagTkBRpb2DBzFTdViKcOs",
         assistant_id="asst_osvt9lAtJC3oxsI7CQJ2r3GO",
         instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}"
         )
 
         if run.status == 'completed': 
             messages = OPENAI_CLIENT.beta.threads.messages.list(
-            thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0"
+            thread_id="thread_DhsagTkBRpb2DBzFTdViKcOs"
         )
             print(messages.data[0].content[0].text.value)
             response = (messages.data[0].content[0].text.value)
