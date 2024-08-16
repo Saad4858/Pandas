@@ -96,7 +96,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id="thread_DhsagTkBRpb2DBzFTdViKcOs",
-        assistant_id="asst_osvt9lAtJC3oxsI7CQJ2r3GO",
+        assistant_id="asst_KNcXz6bftLl3L0rtx2npg84s",
         instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}"
         )
 
