@@ -69,26 +69,26 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         records = ""
 
-        # # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
+        # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
         # if (user_id == 3):
         #     records = get10ReadingRecordsID(user_id - 1)
         # else:
         #     records = get10ReadingRecordsID(user_id)
 
-        # # records = get10ReadingRecords()
+        # records = get10ReadingRecords()
 
-        # current_weather_data = get_current_weather_data("Lahore")
+        current_weather_data = get_current_weather_data("Lahore")
 
-        # forecast , six_hour_forecast = get_forecast("Lahore",3)
+        forecast , six_hour_forecast = get_forecast("Lahore",3)
 
-        # context = "Context of the user's farmland"
-        # context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
-        # context = context + "\n" + six_hour_forecast
+        context = "Context of the user's farmland"
+        context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
+        context = context + "\n" + six_hour_forecast
 
 
-        # rag_info = agent.query(user_prompt) # Temporary For Now
+        rag_info = agent.query(user_prompt) # Temporary For Now
 
-        # context = "\n" + "The following is additional information: \n" + str(rag_info) + "\n"   
+        context = "\n" + "The following is additional information: \n" + str(rag_info) + "\n"   
         context = "Context of the user's farmland"
 
         message = OPENAI_CLIENT.beta.threads.messages.create(
