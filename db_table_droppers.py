@@ -21,3 +21,13 @@ def drop_messages_table(engine):
 def drop_readings_table(engine):
     Base.metadata.drop_all(engine, tables=[Reading.__table__])
     print("Dropped 'readings' table.")
+
+
+# # Drop the 'messages' table
+# drop_messages_table(engine)
+
+# # Drop the 'readings' table
+# drop_readings_table(engine)
+
+# # Now drop the 'users' table
+# drop_users_table(engine)

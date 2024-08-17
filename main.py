@@ -33,15 +33,17 @@ async def root():
 async def get_translated_response(user_prompt: str , language: str, phone: str):
     try:
 
-        # thread_id, user_id = getThreadID(phone)
+        thread_id, user_id = getThreadID(phone)
 
-        # # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
-        # if (user_id == 3):
-        #     records = get10ReadingRecordsID(user_id - 1)
-        # else:
-        #     records = get10ReadingRecordsID(user_id)
+        records = None
 
-        records = get10ReadingRecords()
+        # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
+        if (user_id == 3):
+            records = get10ReadingRecordsID(user_id - 1)
+        else:
+            records = get10ReadingRecordsID(user_id)
+
+        # records = get10ReadingRecords()
 
         current_weather_data = get_current_weather_data("Lahore")
 
