@@ -6,6 +6,8 @@ import requests
 from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID, get10ReadingRecordsID
 
 from weather_api import get_current_weather_data , get_forecast
+import tempfile
+
 
 
 load_dotenv()
@@ -28,6 +30,36 @@ app = FastAPI()
 async def root():
     print("Hello World ")
     return {"message": "Hello World"}
+
+
+@app.get('/transcribeAudio')
+async def transcribe_audio(audio_content:bytes):
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
+            temp_audio_file.write(audio_content)
+            temp_audio_file_path = temp_audio_file.name
+        
+            print(f"Temporary audio file path: {temp_audio_file_path}") 
+
+        transcript_text = None
+        with open(temp_audio_file_path, 'rb') as audio_file:
+            transcription = OPENAI_CLIENT.audio.transcriptions.create(
+                            model="whisper-1", 
+                            file=audio_file
+            )
+
+            transcript_text = transcription.text 
+            print("Transcript:", transcript_text)  
+            
+    except Exception as e:
+        print(f"Error during transcription: {e}")  
+    finally:
+        os.remove(temp_audio_file_path)  
+    
+    
+    return {
+        "transcript": transcript_text
+    }
 
 @app.get('/translatedResponseUser')
 async def get_translated_response(user_prompt: str , language: str, phone: str):
@@ -59,20 +91,20 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         context = "\n" + "The following is additional information: \n" + str(rag_info) + "\n"   
 
         message = OPENAI_CLIENT.beta.threads.messages.create(
-        thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0",
+        thread_id="thread_DhsagTkBRpb2DBzFTdViKcOs",
         role="user",
         content=f"{user_prompt}"
         )
 
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
-        thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0",
-        assistant_id="asst_osvt9lAtJC3oxsI7CQJ2r3GO",
+        thread_id="thread_DhsagTkBRpb2DBzFTdViKcOs",
+        assistant_id="asst_KNcXz6bftLl3L0rtx2npg84s",
         instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}"
         )
 
         if run.status == 'completed': 
             messages = OPENAI_CLIENT.beta.threads.messages.list(
-            thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0"
+            thread_id="thread_DhsagTkBRpb2DBzFTdViKcOs"
         )
             print(messages.data[0].content[0].text.value)
             response = (messages.data[0].content[0].text.value)
