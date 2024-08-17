@@ -67,15 +67,15 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         thread_id, user_id = getThreadID(phone)
 
-        records = None
+        records = ""
 
-        # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
-        if (user_id == 3):
-            records = get10ReadingRecordsID(user_id - 1)
-        else:
-            records = get10ReadingRecordsID(user_id)
+        # # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
+        # if (user_id == 3):
+        #     records = get10ReadingRecordsID(user_id - 1)
+        # else:
+        #     records = get10ReadingRecordsID(user_id)
 
-        # records = get10ReadingRecords()
+        # # records = get10ReadingRecords()
 
         current_weather_data = get_current_weather_data("Lahore")
 
@@ -98,7 +98,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
-        assistant_id="asst_KNcXz6bftLl3L0rtx2npg84s",
+        assistant_id="asst_JBdOZ0ojTdrWTXwYU1hfI0hO",
         instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}"
         )
 

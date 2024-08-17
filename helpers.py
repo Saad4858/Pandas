@@ -29,27 +29,27 @@ assistant = client.beta.assistants.create(
 thread = client.beta.threads.create()
 print(thread.id)
 print(assistant.id)
-# message = client.beta.threads.messages.create(
-#   thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0",
-#   role="user",
-#   content="What is the best crop to grow in Lahore?"
-# )
+message = client.beta.threads.messages.create(
+  thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
+  role="user",
+  content="What is the best crop to grow in Lahore?"
+)
 
-# run = client.beta.threads.runs.create_and_poll(
-#   thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0",
-#   assistant_id="asst_osvt9lAtJC3oxsI7CQJ2r3GO",
-#   instructions="Please address the user as Saad. The user has a premium account."
-# )
+run = client.beta.threads.runs.create_and_poll(
+  thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
+  assistant_id="asst_JBdOZ0ojTdrWTXwYU1hfI0hO",
+  instructions="Please address the user as Saad. The user has a premium account."
+)
 
-# if run.status == 'completed': 
-#   messages = client.beta.threads.messages.list(
-#     thread_id="thread_8iLgae7iQ0MXtSoLq5XHNoK0"
-#   )
-#   print((messages.data[0].content[0].text.value))
-#   # print(messages)
+if run.status == 'completed': 
+  messages = client.beta.threads.messages.list(
+    thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw"
+  )
+  print((messages.data[0].content[0].text.value))
+  # print(messages)
 
-# else:
-#   print(run.status)
+else:
+  print(run.status)
 
 
 
