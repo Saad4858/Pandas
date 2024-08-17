@@ -65,7 +65,7 @@ async def transcribe_audio(audio_content:bytes):
 async def get_translated_response(user_prompt: str , language: str, phone: str):
     try:
 
-        thread_id, user_id = getThreadID(phone)
+        # thread_id, user_id = getThreadID(phone)
 
         records = ""
 
