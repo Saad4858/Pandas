@@ -100,7 +100,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
         assistant_id="asst_7tk40YqXWOqloij6lWpMxMmt",
-        instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}. The current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}. You should respond mostly in roman urdu and please donot reply in hindi."
+        instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}. The current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}. You should respond mostly in English."
         )
 
         if run.status == 'completed': 
@@ -117,15 +117,15 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
 
 
-        # completion_response = OPENAI_CLIENT.chat.completions.create(
-        #     model = 'gpt-3.5-turbo',
-        #     messages=[
-        #         {"role": "system", "content": f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}"},
-        #         {"role": "user", "content": f"{user_prompt}"}
-        #     ]
-        # )
+        completion_response = OPENAI_CLIENT.chat.completions.create(
+            model = 'gpt-4o',
+            messages=[
+                {"role": "system", "content": f"Please translate the following message to roman Urdu for the user."},
+                {"role": "user", "content": f"{response}"}
+            ]
+        )
 
-        # response = completion_response.choices[0].message.content
+        translated_response = completion_response.choices[0].message.content
 
         # users_language = language
 
@@ -144,7 +144,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         
 
         return { 'user_prompt': f'{user_prompt}',
-                 'original_response': f'{response}',
+                 'original_response': f'{translated_response}',
                  'context' : f'{context}',
                  'IOT Rows': f'{records}'
                  }
@@ -152,6 +152,15 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
     except Exception as e:
         print(e)
         return {'message':'failure getting latest message'}
+    
+# @app.post('/addUser')
+# async def add_user(phone: str, user_id: int):
+#     try:
+#         addUser(phone, user_id)
+#         return {'message':'success'}
+#     except Exception as e:
+#         print(e)
+#         return {'message':'failure adding user'}
     
 
 @app.post('/addReadingRecord')

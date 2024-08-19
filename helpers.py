@@ -19,17 +19,17 @@ client = OpenAI(
 
     
 
-assistant = client.beta.assistants.create(
-  name="Agriculture Specialist Assistant",
-  instructions="You are a hepful assistant who has greate knowledge of agriculture tasked to interpret farmers IOT data and provide actionable insights to the farmers. You also should be able to provide market analysis and make best descisions for farmers telling them about the best crops to grow in their area and providing them with knowledge in any agricultural domain possible.",
-  tools=[{"type": "code_interpreter"}],
-  model="gpt-4o",
-)
+# assistant = client.beta.assistants.create(
+#   name="Agriculture Specialist Assistant",
+#   instructions="You are a hepful assistant who has greate knowledge of agriculture tasked to interpret farmers IOT data and provide actionable insights to the farmers. You also should be able to provide market analysis and make best descisions for farmers telling them about the best crops to grow in their area and providing them with knowledge in any agricultural domain possible.",
+#   tools=[{"type": "code_interpreter"}],
+#   model="gpt-4o",
+# )
 
-print(assistant.id)
+# print(assistant.id)
 
-# thread = client.beta.threads.create()
-# print(thread.id)
+thread = client.beta.threads.create()
+print(thread.id)
 # print(assistant.id)
 # message = client.beta.threads.messages.create(
 #   thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
