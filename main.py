@@ -99,8 +99,8 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
-        assistant_id="asst_JBdOZ0ojTdrWTXwYU1hfI0hO",
-        instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}"
+        assistant_id="asst_7tk40YqXWOqloij6lWpMxMmt",
+        instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}. The current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}"
         )
 
         if run.status == 'completed': 
