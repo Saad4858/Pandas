@@ -117,7 +117,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         else:
             print(run.status)
 
-        language = getLanguage()
+        language = getLanguage(user_id)
         print(f"Users Language: {language}")
 
         completion_response = OPENAI_CLIENT.chat.completions.create(
