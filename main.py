@@ -107,7 +107,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         # rag_query = get_rag_query(translated_user_prompt)
 
-        rag_info = agent.query(str(user_prompt)) # Temporary For Now
+        rag_info = agent.query(str(translated_user_prompt)) # Temporary For Now
 
         context = "\n" + str(rag_info) + "\n"   
         profile ="Prepare a message for a 45-year-old female from a low socio-economic background, farming 5 acres with a focus on maize and rice. Optimize her traditional farming and tube well irrigation practices while improving manual pest control methods. Given her primary education and basic mobile phone usage, ensure the advice is straightforward and practical. Use simple Urdu text messages to communicate ways to enhance soil fertility and manage water efficiently. Highlight strategies to combat frequent floods and limited access to chemical fertilizers. Motivate her to explore drip irrigation given her interest in modern techniques, and clarify the importance of pH balance and soil nutrients for better crop health"
