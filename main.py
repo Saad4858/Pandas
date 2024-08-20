@@ -82,7 +82,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         
 
         if (user_id == 1):
-            records = get10ReadingRecords(user_id)
+            records = get10ReadingRecords()
 
         # records = get10ReadingRecords()
 
@@ -107,7 +107,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         rag_query = get_rag_query(translated_user_prompt)
 
-        rag_info = agent.query(rag_query) # Temporary For Now
+        rag_info = agent.query(str(rag_query)) # Temporary For Now
 
         context = "\n" + str(rag_info) + "\n"   
 
