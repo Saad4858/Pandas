@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI , Request
 import os 
 from dotenv import load_dotenv
 import openai
@@ -33,7 +33,8 @@ async def root():
 
 
 @app.post('/transcribeAudio')
-async def transcribe_audio(audio_content:bytes):
+async def transcribe_audio(request: Request):
+    audio_content = await request.body()
     try:
         print("Audio Content:",audio_content)
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
