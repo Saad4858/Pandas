@@ -8,7 +8,7 @@ from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLa
 from weather_api import get_current_weather_data , get_forecast
 import tempfile
 
-
+from rag_query_template import get_rag_query
 
 load_dotenv()
 
@@ -77,6 +77,10 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
             records = get10ReadingRecordsID(user_id - 1)
         else:
             records = get10ReadingRecordsID(user_id)
+        
+
+        if (user_id == 1):
+            records = get10ReadingRecords(user_id)
 
         # records = get10ReadingRecords()
 
@@ -88,10 +92,22 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         # context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
         # context = context + "\n" + six_hour_forecast
 
-        rag_info = agent.query(user_prompt) # Temporary For Now
+        completion_response = OPENAI_CLIENT.chat.completions.create(
+            model = 'gpt-4o',
+            messages=[
+                {"role": "system", "content": f"Please translate the following message to English. Do not make any changes to the message itself. If it is already in english, return the message exactly as it was received"},
+                {"role": "user", "content": f"{user_prompt}"}
+            ]
+        )
 
-        context = "\n" + "The following is additional information: \n" + str(rag_info) + "\n"   
-        context = "Context of the user's farmland"
+        translated_user_prompt = completion_response.choices[0].message.content
+        print(f"Translated User Prompt: {translated_user_prompt}")
+
+        rag_query = get_rag_query(translated_user_prompt)
+
+        rag_info = agent.query(rag_query) # Temporary For Now
+
+        context = "\n" + str(rag_info) + "\n"   
 
         message = OPENAI_CLIENT.beta.threads.messages.create(
         thread_id=thread_id,

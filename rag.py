@@ -73,7 +73,7 @@ tools = [
 context = """Purpose: The primary role of this agent is to assist users by providing accurate 
             information about punnjabs agriculture statistics and details. """
 
-llm = OpenAI(model="gpt-3.5-turbo")
+llm = OpenAI(model="gpt-4o")
 agent = ReActAgent.from_tools(tools, llm=llm, verbose=True, context=context)
 
 def getRagResponse(query):
