@@ -1,8 +1,10 @@
 import requests
 
 import json 
+from datetime import datetime
 
-weather_api_key = "daa0520e018242bb963113925243107"
+
+weather_api_key = "9d2eb6145f744e3e81c70537241708"
 base_url = "http://api.weatherapi.com/v1"
 
 def get_current_weather_data(city):
