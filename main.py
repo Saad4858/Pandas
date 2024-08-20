@@ -66,15 +66,18 @@ async def transcribe_audio(audio_content:bytes):
 async def get_translated_response(user_prompt: str , language: str, phone: str):
     try:
 
-        # thread_id, user_id = getThreadID(phone)
+        thread_id, user_id = getThreadID(phone)
+
+        print(f"Thread: {thread_id}")
+        print(f"User id: {user_id}")
 
         records = ""
 
         # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
-        # if (user_id == 3):
-        #     records = get10ReadingRecordsID(user_id - 1)
-        # else:
-        #     records = get10ReadingRecordsID(user_id)
+        if (user_id == 3):
+            records = get10ReadingRecordsID(user_id - 1)
+        else:
+            records = get10ReadingRecordsID(user_id)
 
         # records = get10ReadingRecords()
 
@@ -82,10 +85,9 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         forecast , six_hour_forecast = get_forecast("Lahore",3)
 
-        context = "Context of the user's farmland"
-        context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
-        context = context + "\n" + six_hour_forecast
-
+        # context = "Context of the user's farmland"
+        # context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
+        # context = context + "\n" + six_hour_forecast
 
         rag_info = agent.query(user_prompt) # Temporary For Now
 
@@ -93,35 +95,36 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         context = "Context of the user's farmland"
 
         message = OPENAI_CLIENT.beta.threads.messages.create(
-        thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
+        thread_id=thread_id,
         role="user",
         content=f"{user_prompt}"
         )
 
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
-        thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
+        thread_id=thread_id,
         assistant_id="asst_7tk40YqXWOqloij6lWpMxMmt",
         instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two sentences. Do not mention technical details in your answer. The user's farmland has the following record: {str(records)} and the following is additional information: {context}. The current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}. You should respond mostly in English."
         )
 
         if run.status == 'completed': 
             messages = OPENAI_CLIENT.beta.threads.messages.list(
-            thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw"
+            thread_id=thread_id
         )
             print(messages.data[0].content[0].text.value)
             response = (messages.data[0].content[0].text.value)
             
-            addConversation(1, user_prompt, response)
+            addConversation(user_id, user_prompt, response)
         # print(messages)
         else:
             print(run.status)
 
-
+        language = getLanguage(user_id)
+        print(f"Users Language: {language}")
 
         completion_response = OPENAI_CLIENT.chat.completions.create(
             model = 'gpt-4o',
             messages=[
-                {"role": "system", "content": f"Please translate the following message to roman Urdu for the user."},
+                {"role": "system", "content": f"Please translate the following message to {language} for the user. Do not make any changes to the message itself."},
                 {"role": "user", "content": f"{response}"}
             ]
         )

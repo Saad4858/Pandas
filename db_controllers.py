@@ -72,7 +72,7 @@ def get10ReadingRecords():
         return dict_results
     except Exception as e:
         print(f"Error: Could Not Get Latest Readings. Exception: {e}")
-        return None
+        return ""
 
 def get10ReadingRecordsID(user_id):
     try:
@@ -101,7 +101,7 @@ def get10ReadingRecordsID(user_id):
         return dict_results
     except Exception as e:
         print(f"Error: Could Not Get Latest Readings. Exception: {e}")
-        return None
+        return ""
 
 def addConversation(user_id, message, response):
     try:
@@ -149,10 +149,10 @@ def getLanguage(user_id):
             return user.language
         else:
             # If the user does not exist, return None or handle accordingly
-            return None
+            return ""
     except Exception as e: 
         print(f"Error: Could Not Get User Language. Exception: {e}")
-        return None
+        return ""
         
 
 def getThreadID(phone):
@@ -172,7 +172,7 @@ def getThreadID(phone):
         else:
             # If the user does not exist, return None or handle accordingly
             print("Error: Could Not Get User Thread")
-            return None
+            return "", ""
     except Exception as e:
         print(f"Error: Could Not Get User Thread. Exception: {e}")
-        return None, None
+        return "", ""

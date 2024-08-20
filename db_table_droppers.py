@@ -23,11 +23,11 @@ def drop_readings_table(engine):
     print("Dropped 'readings' table.")
 
 
-# # Drop the 'messages' table
-# drop_messages_table(engine)
+# Drop the 'messages' table
+drop_messages_table(engine)
 
-# # Drop the 'readings' table
-# drop_readings_table(engine)
+# Drop the 'readings' table
+drop_readings_table(engine)
 
-# # Now drop the 'users' table
-# drop_users_table(engine)
+# Now drop the 'users' table
+drop_users_table(engine)
