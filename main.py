@@ -32,7 +32,7 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.get('/transcribeAudio')
+@app.post('/transcribeAudio')
 async def transcribe_audio(audio_content:bytes):
     try:
         print("Audio Content:",audio_content)
