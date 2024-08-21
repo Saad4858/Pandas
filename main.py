@@ -9,6 +9,7 @@ from weather_api import get_current_weather_data , get_forecast
 import tempfile
 
 from rag_query_template import get_rag_query
+from datetime import datetime
 
 load_dotenv()
 
@@ -86,6 +87,9 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         forecast , six_hour_forecast = get_forecast("Lahore",3)
 
+        current_date = datetime.now().date()
+        print(f"Current Date: {current_date}")
+
         # context = "Context of the user's farmland"
         # context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
         # context = context + "\n" + six_hour_forecast
@@ -117,7 +121,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id=thread_id,
         assistant_id="asst_FBRU2BrRnNhJCdvFO2cTgT9A",
-        instructions=f"You are a helpful assistant who has great knowledge of agriculture.The user profile is as provided ,  {profile}.  The user's farmland has the following record: {str(records)} and the following is additional information: {context}. The current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}. You should respond mostly in English."
+        instructions=f"You are a helpful assistant who has great knowledge of agriculture.The date today is {current_date}The user profile is as provided , {profile}.  The user's farmland has the following record: {str(records)} and the following is additional information: {context}. The current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}. You should respond mostly in English."
         )
 
         if run.status == 'completed': 
