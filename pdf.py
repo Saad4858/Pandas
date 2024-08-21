@@ -42,6 +42,12 @@ sugercane_pdf = pdf_reader.load_data(file="data/SugarcanePolicyAnalysis for 2022
 sugercane_index = get_index(sugercane_pdf, "sugercane")
 sugercane_engine = sugercane_index.as_query_engine()
 
+reader = SimpleDirectoryReader('./data/blackberry/')
+blackberry_pdf = reader.load_data()
+#blackberry_pdf = pdf_reader.load_data(file="data/BlackBerries.pdf")
+blackberry_index = get_index(blackberry_pdf, "blackberry")
+blackberry_engine = blackberry_index.as_query_engine()
+
 # # Load and read the PDF file
 # mnfsr_pdf = pdf_reader.load_data(file="data/mnfsrpublication.pdf")
 # mnfsr_index = get_index(mnfsr_pdf, "agriculture statistics")
