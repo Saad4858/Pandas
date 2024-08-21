@@ -75,14 +75,10 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         records = ""
 
         # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
-        if (user_id == 3):
-            records = get10ReadingRecordsID(user_id - 1)
-        else:
-            records = get10ReadingRecordsID(user_id)
-        
-
         if (user_id == 1):
             records = get10ReadingRecords()
+        else:
+            records = get10ReadingRecordsID(user_id)
 
         # records = get10ReadingRecords()
 
