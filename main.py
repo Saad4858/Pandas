@@ -95,7 +95,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         # context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
         # context = context + "\n" + six_hour_forecast
 
-        
+        translated_user_prompt = user_prompt
         # print(f"Context: {context}")
         if language != "English":
             completion_response = OPENAI_CLIENT.chat.completions.create(
@@ -110,6 +110,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
             print(f"Translated User Prompt: {translated_user_prompt}")
 
         # rag_query = get_rag_query(translated_user_prompt)
+        
 
 
         rag_prompt = ""
