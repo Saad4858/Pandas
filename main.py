@@ -111,7 +111,16 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         # rag_query = get_rag_query(translated_user_prompt)
 
-        rag_info = agent.query(str(translated_user_prompt)) # Temporary For Now
+
+        rag_prompt = ""
+
+        if (user_id == 3):
+            rag_prompt = rag_prompt + "For Blackberries: \n" + translated_user_prompt
+        else:
+            rag_prompt = translated_user_prompt
+        
+
+        rag_info = agent.query(str(rag_prompt)) # Temporary For Now
 
         context = "\n" + str(rag_info) + "\n"  
         profile = "" 

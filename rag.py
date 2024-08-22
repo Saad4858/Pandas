@@ -10,7 +10,7 @@ from llama_index.llms.openai import OpenAI
 
 load_dotenv()
 
-from pdf import wheat_engine, cotton_engine, rice_engine, sugercane_engine
+from pdf import wheat_engine, cotton_engine, rice_engine, sugercane_engine, blackberry_engine
 
 
 
@@ -61,6 +61,13 @@ tools = [
             description="this gives detailed information about the sugercane crop in Pakistan",
         ),
     ),
+    QueryEngineTool(
+        query_engine=blackberry_engine,
+        metadata=ToolMetadata(
+            name="blackberry_data",
+            description="this gives detailed information about the blackberry crop in general and specifically of it being grown in Pakistan",
+        ),
+    ),
     # QueryEngineTool(
     #     query_engine=mnfsr_engine,
     #     metadata=ToolMetadata(
@@ -71,7 +78,7 @@ tools = [
 ]
 
 context = """Purpose: The primary role of this agent is to assist users by providing accurate 
-            information about punnjabs agriculture statistics and details. """
+            information about punjabs agriculture statistics and details. """
 
 llm = OpenAI(model="gpt-4o")
 agent = ReActAgent.from_tools(tools, llm=llm, verbose=True, context=context)
@@ -81,6 +88,6 @@ def getRagResponse(query):
     return result
 
 
-# while (prompt := input("Enter a prompt (q to quit): ")) != "q":
-#     result = agent.query(prompt)
-#     print(result)
+while (prompt := input("Enter a prompt (q to quit): ")) != "q":
+    result = agent.query(prompt)
+    print(result)
