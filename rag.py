@@ -88,6 +88,6 @@ def getRagResponse(query):
     return result
 
 
-while (prompt := input("Enter a prompt (q to quit): ")) != "q":
-    result = agent.query(prompt)
-    print(result)
+# while (prompt := input("Enter a prompt (q to quit): ")) != "q":
+#     result = agent.query(prompt)
+#     print(result)
