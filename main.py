@@ -150,7 +150,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id=thread_id,
         assistant_id="asst_FBRU2BrRnNhJCdvFO2cTgT9A",
-        instructions=f"You are a helpful assistant who has great knowledge of agriculture.The date today is {current_date}The user profile is as provided , {profile}.  The user's farmland has the following record: {str(records)} and the following is additional information: {context}. The current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}. You should respond mostly in English."
+        instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Keep your answers short, to the point and to a maximum of two to three sentences. Do not mention technical details in your answer. The date today is {current_date}. The user profile is as provided , {profile}. The user's farmland has the following record: {str(records)} and the following is additional information: {context}. The current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}. You should respond mostly in English."
         )
 
         if run.status == 'completed': 
