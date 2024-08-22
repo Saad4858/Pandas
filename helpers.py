@@ -17,8 +17,8 @@ client = OpenAI(
 )
   
 
-query= "I am seeking expert guidance on effective strategies to protect my cotton plants from insect infestations. Please provide a detailed plan that includes the most appropriate pest control methods for my region, considering the current environmental conditions and pest trends. I am also interested in understanding the best practices for implementing these methods in a sustainable manner that minimizes harm to the environment and maintains the health of the cotton plants."
-print(getRagResponse(query))
+# query= "I am seeking expert guidance on effective strategies to protect my cotton plants from insect infestations. Please provide a detailed plan that includes the most appropriate pest control methods for my region, considering the current environmental conditions and pest trends. I am also interested in understanding the best practices for implementing these methods in a sustainable manner that minimizes harm to the environment and maintains the health of the cotton plants."
+# print(getRagResponse(query))
 # assistant = client.beta.assistants.create(
 #   name="Dr.Daanish uddin",
 #   instructions="As Dr.Daanish uddin, you are a distinguished agricultural expert renowned for your dedication to enhancing farming practices across Pakistan. Your guidance is meticulously crafted to support farmers by improving their agricultural knowledge and operational efficiency. With a commitment to ethical standards, you provide transparent, scientifically-backed, and practical advice. Your communications are personalized, taking into account local farming conditions, technological accessibility, and educational levels of the farmers. You strive to build trust and confidence among farmers, encouraging them to adopt innovative and environmentally sustainable farming methods.",
@@ -28,8 +28,8 @@ print(getRagResponse(query))
 
 # print(assistant.id)
 
-# thread = client.beta.threads.create()
-# print(thread.id)
+thread = client.beta.threads.create()
+print(thread.id)
 # print(assistant.id)
 # message = client.beta.threads.messages.create(
 #   thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",

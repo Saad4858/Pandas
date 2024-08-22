@@ -69,6 +69,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
     try:
 
         thread_id, user_id = getThreadID(phone)
+        language = getLanguage(user_id)
 
         print(f"Thread: {thread_id}")
         print(f"User id: {user_id}")
@@ -94,16 +95,19 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         # context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
         # context = context + "\n" + six_hour_forecast
 
-        completion_response = OPENAI_CLIENT.chat.completions.create(
-            model = 'gpt-4o',
-            messages=[
-                {"role": "system", "content": f"Please translate the following message to English. Do not make any changes to the message itself. If it is already in english, return the message exactly as it was received"},
-                {"role": "user", "content": f"{user_prompt}"}
-            ]
-        )
+        
+        # print(f"Context: {context}")
+        if language != "English":
+            completion_response = OPENAI_CLIENT.chat.completions.create(
+                model = 'gpt-4o',
+                messages=[
+                    {"role": "system", "content": f"Please translate the following message to English. Do not make any changes to the message itself. If it is already in english, return the message exactly as it was received"},
+                    {"role": "user", "content": f"{user_prompt}"}
+                ]
+            )
 
-        translated_user_prompt = completion_response.choices[0].message.content
-        print(f"Translated User Prompt: {translated_user_prompt}")
+            translated_user_prompt = completion_response.choices[0].message.content
+            print(f"Translated User Prompt: {translated_user_prompt}")
 
         # rag_query = get_rag_query(translated_user_prompt)
 
@@ -113,12 +117,12 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         profile = "" 
 
         if (user_id == 3):
-            profile ="Prepare a message for a 45-year-old female from a low socio-economic background, farming 5 acres with a focus on maize and rice. Optimize her traditional farming and tube well irrigation practices while improving manual pest control methods. Given her primary education and basic mobile phone usage, ensure the advice is straightforward and practical. Use simple Urdu text messages to communicate ways to enhance soil fertility and manage water efficiently. Highlight strategies to combat frequent floods and limited access to chemical fertilizers. Motivate her to explore drip irrigation given her interest in modern techniques, and clarify the importance of pH balance and soil nutrients for better crop health"
+            profile ="A meticulous and detail-oriented individual, she holds a PhD in Computer Science with a specialization in Human-Computer Interaction. She is an instructor at a prestigious university and applies her rigorous academic mindset to her home farming activities. Growing blackberries in DHA, Lahore, Punjab, Pakistan, she dedicates daily attention to her crop, striving for the highest quality. Her interest in innovative techniques aligns with her commitment to successful and sustainable farming practices. Given her preference for efficiency, she values concise, 2-3 line responses from a chatbot to quickly address her queries and needs. She specifically seeks brief but actionable advice that she can put into practice, ensuring her time is used effectively"
 
         
 
         if (user_id == 1):
-            profile ="Prepare a message for a 45-year-old female from a low socio-economic background, farming 5 acres with a focus on maize and rice. Optimize her traditional farming and tube well irrigation practices while improving manual pest control methods. Given her primary education and basic mobile phone usage, ensure the advice is straightforward and practical. Use simple Urdu text messages to communicate ways to enhance soil fertility and manage water efficiently. Highlight strategies to combat frequent floods and limited access to chemical fertilizers. Motivate her to explore drip irrigation given her interest in modern techniques, and clarify the importance of pH balance and soil nutrients for better crop health"
+            profile ="A meticulous and detail-oriented individual, she holds a PhD in Computer Science with a specialization in Human-Computer Interaction. She is an instructor at a prestigious university and applies her rigorous academic mindset to her home farming activities. Growing blackberries in DHA, Lahore, Punjab, Pakistan, she dedicates daily attention to her crop, striving for the highest quality. Her interest in innovative techniques aligns with her commitment to successful and sustainable farming practices. Given her preference for efficiency, she values concise, 2-3 line responses from a chatbot to quickly address her queries and needs. She specifically seeks brief but actionable advice that she can put into practice, ensuring her time is used effectively"
 
         
 
@@ -152,8 +156,14 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         else:
             print(run.status)
 
-        language = getLanguage(user_id)
+        
         print(f"Users Language: {language}")
+        if language == "English":
+            return { 'user_prompt': f'{user_prompt}',
+                 'original_response': f'{response}',
+                 'context' : f'{context}',
+                 'IOT Rows': f'{records}'
+                 }
 
         completion_response = OPENAI_CLIENT.chat.completions.create(
             model = 'gpt-4o',
