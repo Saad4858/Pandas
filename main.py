@@ -37,7 +37,7 @@ async def root():
 async def transcribe_audio(request: Request):
     audio_content = await request.body()
     try:
-        print("Audio Content:",audio_content)
+        # print("Audio Content:",audio_content)
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_audio_file:
             temp_audio_file.write(audio_content)
             temp_audio_file_path = temp_audio_file.name
