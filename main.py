@@ -70,9 +70,10 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         thread_id, user_id = getThreadID(phone)
         language = getLanguage(user_id)
+        print("User Prompt : ", user_prompt)
 
-        print(f"Thread: {thread_id}")
-        print(f"User id: {user_id}")
+        # print(f"Thread: {thread_id}")
+        # print(f"User id: {user_id}")
 
         records = ""
 
@@ -89,7 +90,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         forecast , six_hour_forecast = get_forecast("Lahore",3)
 
         current_date = datetime.now().date()
-        print(f"Current Date: {current_date}")
+        # print(f"Current Date: {current_date}")
 
         # context = "Context of the user's farmland"
         # context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data

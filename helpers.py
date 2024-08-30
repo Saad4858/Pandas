@@ -54,33 +54,33 @@ client = OpenAI(
 #   print(run.status)
 
 import requests
+def sendWhatsappMessage(phone_number, message):
+   url = 'https://graph.facebook.com/v20.0/304854782718986/messages'
+   headers = {
+      'Authorization': 'Bearer EAAGI94sqL8oBOxiUhsTHDqyKJSq9qZA749ox5MoEZAoZBZBYF1sUVsNeASZANxIL9o6wWZArYu4bVMmAteUJYndZBo6m8qu92qu25sp7dcde0yOHjgwzVexlIXsdAZCEpf7HIUDBaZCZBqzJKqXPyZBTkexfsbHtPlpmT9TnN84CYLPvQMhbNLZAdgKQrSTmhve0X1RptjYRY4ciZCZBPfYXJWCScZD', 
+      'Content-Type': 'application/json'
+   }
+   data = {
+      "messaging_product": "whatsapp",
+      "to": phone_number,  # Updated recipient number
+      #  "type": "template",
+      "text": { "body": message },
+      #  "template": {
+      #      "name": "hello_world",
+      #      "language": {
+      #          "code": "en_US"
+      #      }
+      #  }
+   }
 
-url = 'https://graph.facebook.com/v20.0/304854782718986/messages'
-headers = {
-    'Authorization': 'Bearer EAAGI94sqL8oBO1wr2tF5ezUtTyT6VOaEtgnxWJJ7Fj88X2Qup301SnLmZAVeS5OfTYZAmqvngz3DndhKLJ8TwvZCGFuS0ARmVMfLZASYaKwz17EzRG7SrpNiDSZCPIiojVSVL7NFblp8s1VvhZBjmIPtCkFJUgZBJY72ZBkoq5TPns2MExLlDA089Xmj',
-    'Content-Type': 'application/json'
-}
-data = {
-    "messaging_product": "whatsapp",
-    "to": "923200006080",
-    "type": "template",
-    "template": {
-        "name": "hello_world this is a test message",
-        "language": {
-            "code": "en_US"
-        }
-    }
-}
+   response = requests.post(url, headers=headers, json=data)
 
-response = requests.post(url, headers=headers, json=data)
-
-if response.status_code == 200:
-    print("Request successful!")
-    print(response.json())
-else:
-    print(f"Request failed with status code {response.status_code}")
-    print(response.text)
-
+   if response.status_code == 200:
+      print("Request successful!")
+      print(response.json())
+   else:
+      print(f"Request failed with status code {response.status_code}")
+      print(response.text)
 
 # # read teh data from the json file 
 # def get_crop_prices_by_city(city_name):
