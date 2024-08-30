@@ -28,8 +28,8 @@ client = OpenAI(
 
 # print(assistant.id)
 
-thread = client.beta.threads.create()
-print(thread.id)
+# thread = client.beta.threads.create()
+# print(thread.id)
 # print(assistant.id)
 # message = client.beta.threads.messages.create(
 #   thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
@@ -53,8 +53,33 @@ print(thread.id)
 # else:
 #   print(run.status)
 
+import requests
 
+url = 'https://graph.facebook.com/v20.0/304854782718986/messages'
+headers = {
+    'Authorization': 'Bearer EAAGI94sqL8oBO1wr2tF5ezUtTyT6VOaEtgnxWJJ7Fj88X2Qup301SnLmZAVeS5OfTYZAmqvngz3DndhKLJ8TwvZCGFuS0ARmVMfLZASYaKwz17EzRG7SrpNiDSZCPIiojVSVL7NFblp8s1VvhZBjmIPtCkFJUgZBJY72ZBkoq5TPns2MExLlDA089Xmj',
+    'Content-Type': 'application/json'
+}
+data = {
+    "messaging_product": "whatsapp",
+    "to": "923200006080",
+    "type": "template",
+    "template": {
+        "name": "hello_world this is a test message",
+        "language": {
+            "code": "en_US"
+        }
+    }
+}
 
+response = requests.post(url, headers=headers, json=data)
+
+if response.status_code == 200:
+    print("Request successful!")
+    print(response.json())
+else:
+    print(f"Request failed with status code {response.status_code}")
+    print(response.text)
 
 
 # # read teh data from the json file 

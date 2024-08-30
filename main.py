@@ -153,7 +153,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         assistant_id="asst_FBRU2BrRnNhJCdvFO2cTgT9A",
         instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Provide Natural language responses with no markdown. Keep your answers short, to the point and to a maximum of two to three sentences. Do not mention technical details in your answer. The date today is {current_date}. The user profile is as provided , {profile}. The user's farmland has the following record: {str(records)} and the following is additional information: {context}. The current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}. You should respond mostly in English."
         )
-
+        response = ""
         if run.status == 'completed': 
             messages = OPENAI_CLIENT.beta.threads.messages.list(
             thread_id=thread_id
@@ -165,6 +165,11 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         # print(messages)
         else:
             print(run.status)
+            return { 'user_prompt': 'No response from the assistant',
+                 'original_response': 'No response from the assistant',
+                 'context' : 'No response from the assistant',
+                 'IOT Rows': 'No response from the assistant'
+                 }
 
         
         print(f"Users Language: {language}")
@@ -184,23 +189,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         )
 
         translated_response = completion_response.choices[0].message.content
-
-        # users_language = language
-
-        # # Translating Response To Local Language of User (Pulled From DB)
-        # translated_response = OPENAI_CLIENT.chat.completions.create(
-        #     model = 'gpt-3.5-turbo',
-        #     messages=[
-        #         {"role": "system", "content": f"You are a helpful assistant who has great knowledge of languages. You translate English to local languages for farmers in Pakistan."},
-        #         {"role": "user", "content": f"Translate the following {response} into {users_language} language."}
-        #     ]
-        # )
-
-        # print(f"You asked: {user_prompt}")
-        # print(f"Response: {translated_response.choices[0].message.content}")
         
-        
-
         return { 'user_prompt': f'{user_prompt}',
                  'original_response': f'{translated_response}',
                  'context' : f'{context}',
