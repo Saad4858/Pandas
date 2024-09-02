@@ -28,8 +28,8 @@ client = OpenAI(
 
 # print(assistant.id)
 
-# thread = client.beta.threads.create()
-# print(thread.id)
+thread = client.beta.threads.create()
+print(thread.id)
 # print(assistant.id)
 # message = client.beta.threads.messages.create(
 #   thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",

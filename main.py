@@ -71,6 +71,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         thread_id, user_id = getThreadID(phone)
         language = getLanguage(user_id)
         print("User Prompt : ", user_prompt)
+        thread_id = "thread_Hq7Rk8o86gUmd2sML0o7ra5Q"
 
         # print(f"Thread: {thread_id}")
         # print(f"User id: {user_id}")
@@ -200,16 +201,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
     except Exception as e:
         print(e)
         return {'message':'failure getting latest message'}
-    
-# @app.post('/addUser')
-# async def add_user(phone: str, user_id: int):
-#     try:
-#         addUser(phone, user_id)
-#         return {'message':'success'}
-#     except Exception as e:
-#         print(e)
-#         return {'message':'failure adding user'}
-    
+      
 
 @app.post('/addReadingRecord')
 async def add_reading_record(pH: float, nitrogen: float, phosphorous: float, potassium: float, temperature: float, moisture: float, conductivity: float, battery: float, user_id: int):
