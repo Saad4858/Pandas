@@ -71,6 +71,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         thread_id, user_id = getThreadID(phone)
         language = getLanguage(user_id)
         print("User Prompt : ", user_prompt)
+        thread_id = "thread_Hq7Rk8o86gUmd2sML0o7ra5Q"
 
         # print(f"Thread: {thread_id}")
         # print(f"User id: {user_id}")
@@ -166,7 +167,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id=thread_id,
-        assistant_id="asst_FBRU2BrRnNhJCdvFO2cTgT9A",
+        assistant_id="asst_7NBRXiK2PDPyrSzwHi73LkNX",
         instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Provide Natural language responses with no markdown. Keep your answers short, to the point and to a maximum of two to three sentences. Do not mention technical details in your answer. The date today is {current_date}.\nUser profile: {profile}.\nThe user's farmland has the following record: {str(final_records)} and the following is additional information: {context}.\nThe current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}."
         )
         response = ""
@@ -215,16 +216,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
     except Exception as e:
         print(e)
         return {'message':'failure getting latest message'}
-    
-# @app.post('/addUser')
-# async def add_user(phone: str, user_id: int):
-#     try:
-#         addUser(phone, user_id)
-#         return {'message':'success'}
-#     except Exception as e:
-#         print(e)
-#         return {'message':'failure adding user'}
-    
+      
 
 @app.post('/addReadingRecord')
 async def add_reading_record(pH: float, nitrogen: float, phosphorous: float, potassium: float, temperature: float, moisture: float, conductivity: float, battery: float, user_id: int):
