@@ -122,7 +122,7 @@ def sendDailyUpdate(phone):
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id=thread_id,
         assistant_id="asst_FBRU2BrRnNhJCdvFO2cTgT9A",
-        instructions=f"{system_prompt}.\nThe date today is {current_date}.\nThe user profile is as provided , {profile}.\nThe user's farmland has the following record: {str(final_records)}.\nThe current weather situation is as follows: {current_weather_data}.\nThe forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}."
+        instructions=f"{system_prompt}.\nThe date today is {current_date}.\nUser profile: {profile}.\nThe user's farmland has the following record: {str(final_records)}.\nThe current weather situation is as follows: {current_weather_data}.\nThe forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}."
         )
         response = ""
         if run.status == 'completed': 
@@ -178,3 +178,4 @@ def sendDailyUpdate(phone):
         return {'message':'failure getting latest message'}
     
 # Add Function Calls For Users to Update Here
+sendDailyUpdate("923200006080")
