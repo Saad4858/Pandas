@@ -4,8 +4,6 @@ import openai
 import requests
 from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID, get10ReadingRecordsID
 
-from weather_api import get_current_weather_data , get_forecast
-
 from datetime import datetime
 from helpers import sendWhatsappMessage
 
@@ -57,9 +55,9 @@ def sendDailyUpdate(phone):
         final_records = "\n".join(formatted_records)
 
 
-        current_weather_data = get_current_weather_data("Lahore")
+        # current_weather_data = get_current_weather_data("Lahore")
 
-        forecast , six_hour_forecast = get_forecast("Lahore",3)
+        # forecast , six_hour_forecast = get_forecast("Lahore",3)
 
         current_date = datetime.now().date()
   
@@ -121,15 +119,14 @@ def sendDailyUpdate(phone):
 
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id=thread_id,
-        assistant_id="asst_FBRU2BrRnNhJCdvFO2cTgT9A",
-        instructions=f"{system_prompt}.\nThe date today is {current_date}.\nUser profile: {profile}.\nThe user's farmland has the following record: {str(final_records)}.\nThe current weather situation is as follows: {current_weather_data}.\nThe forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}."
+        assistant_id="asst_7NBRXiK2PDPyrSzwHi73LkNX",
+        instructions=f"{system_prompt}.\nThe date today is {current_date}.\nUser profile: {profile}.\nThe user's farmland has the following record: {str(final_records)}."
         )
         response = ""
         if run.status == 'completed': 
             messages = OPENAI_CLIENT.beta.threads.messages.list(
             thread_id=thread_id
         )
-            print(messages.data[0].content[0].text.value)
             response = (messages.data[0].content[0].text.value)
             
             addConversation(user_id, "daily update", response)

@@ -85,7 +85,7 @@ def sendWhatsappMessage(phone_number, message):
       print(response.text)
 
 
-sendWhatsappMessage("923200006080", "Hello, this is a test message from the AgriBot. How can I help you today?")
+# sendWhatsappMessage("923200006080", "Hello, this is a test message from the AgriBot. How can I help you today?")
 # # read teh data from the json file 
 # def get_crop_prices_by_city(city_name):
 #     try: 
