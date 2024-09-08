@@ -10,6 +10,7 @@ import tempfile
 
 from rag_query_template import get_rag_query
 from datetime import datetime
+from pydub import AudioSegment
 
 load_dotenv()
 
@@ -217,6 +218,71 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         print(e)
         return {'message':'failure getting latest message'}
       
+@app.get('getAudioResponse')
+async def generate_tts_audio(text:str):
+    voice = "alloy"
+    temp_mp3_file = None
+    temp_ogg_file = None
+
+    try:
+        # Generate TTS audio (MP3)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_mp3_file:
+            with OPENAI_CLIENT.audio.speech.with_streaming_response.create(
+                model="tts-1",
+                voice=voice,
+                input=text,
+                response_format="mp3",
+            ) as response:
+                response.stream_to_file(temp_mp3_file.name)
+
+        # Check if MP3 file was generated successfully
+        if not os.path.exists(temp_mp3_file.name) or os.path.getsize(temp_mp3_file.name) == 0:
+            raise Exception("OpenAI TTS audio generation failed or produced an empty file.")
+
+        # Convert MP3 to OGG
+        sound = AudioSegment.from_mp3(temp_mp3_file.name)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".ogg") as temp_ogg_file:
+            sound.export(temp_ogg_file.name, format="ogg")
+            temp_ogg_file.close()
+
+        # Check if OGG file was generated successfully
+        if not os.path.exists(temp_ogg_file.name) or os.path.getsize(temp_ogg_file.name) == 0:
+            raise Exception("MP3 to OGG conversion failed or produced an empty file.")
+
+        # Upload to WhatsApp Cloud API Media Library
+        with open(temp_ogg_file.name, 'rb') as audio_file:
+            files = {
+                'file': ('audio.ogg', audio_file, 'audio/ogg'),  # Include filename
+                'type': (None, 'audio/ogg'),
+                'messaging_product': (None, 'whatsapp')
+            }
+            headers = {
+                'Authorization': f'Bearer EAAGI94sqL8oBOZBp1yIJav1h1OCz5ZBXeDuLOyAzREBKq5ZCudKZC7z5BOjKzvLlPK4ALBVbmnoCcZCkan6T6dlLPfOI9wvswWTXCf9jWyais3oWRhLRt4Sa26KavTdYw4nurzcQ8wmxak4MxwtFZAY8fONzP3gehh1NZCsYzCRPcVZC3lZCL5qVSuWEu'
+            }
+            print(f"File size: {os.path.getsize(temp_ogg_file.name)} bytes")
+            print(f"Content type: {files['type'][1]}") 
+            response = requests.post(
+                f'https://graph.facebook.com/v13.0/304854782718986/media',
+                files=files,
+                headers=headers
+            )
+
+            print(response.json())
+
+            # Handle response and extract media ID
+            response.raise_for_status()
+            media_id = response.json().get('id')
+            return media_id
+
+    except Exception as e:
+        print(f"Error: {e}")  # Print the specific error message for better debugging
+        return None
+
+    finally:
+        if temp_mp3_file:
+            os.remove(temp_mp3_file.name)
+        if temp_ogg_file:
+            os.remove(temp_ogg_file.name)
 
 @app.post('/addReadingRecord')
 async def add_reading_record(pH: float, nitrogen: float, phosphorous: float, potassium: float, temperature: float, moisture: float, conductivity: float, battery: float, user_id: int):
