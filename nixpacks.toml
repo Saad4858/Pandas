@@ -1,2 +1,6 @@
 [phases.setup]
-    nixPkgs = ["...", "ffmpeg"]
+nixPkgs = [
+    "python311",
+    "ffmpeg",
+    "libavcodec-extra" # This is crucial to get ffprobe
+]
