@@ -171,8 +171,6 @@ client = OpenAI()
 
 class CalendarEvent(BaseModel):
     time: str
-    follow_up: bool
-    mood: str
 
 
 
