@@ -146,7 +146,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
             resp = "I have added a reminder to your calendar for " + time
             return { 'user_prompt': f'{user_prompt}',
                  'original_response': f'{resp}',
-                 'context' : f'{context}',
+                 'context' : f'{""}',
                  'IOT Rows': f'{records}'
                  }
 
