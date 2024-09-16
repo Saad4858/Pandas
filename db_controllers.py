@@ -186,3 +186,32 @@ def getThreadID(phone):
     except Exception as e:
         print(f"Error: Could Not Get User Thread. Exception: {e}")
         return "", ""
+
+def updateUserTime(user_id, new_update_time):
+    try:
+        # Setup the engine and session
+        engine = getEngine()
+        Session = sessionmaker(bind=engine)
+
+        # Step 2: Create a session
+        session = Session()
+
+        # Step 3: Query the user by user_id
+        user = session.query(User).filter_by(id=user_id).first()
+
+        # Check if the user exists
+        if user:
+            # Step 4: Update the update_time field
+            user.update_time = new_update_time
+
+            # Step 5: Commit the transaction
+            session.commit()
+            print(f"User {user_id} update_time updated to {new_update_time}")
+        else:
+            print(f"User with id {user_id} not found.")
+
+        # Close the session
+        session.close()
+
+    except Exception as e:
+        print(f"Error: Could not update update_time. Exception: {e}")
