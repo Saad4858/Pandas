@@ -11,6 +11,7 @@ import tempfile
 from rag_query_template import get_rag_query
 from datetime import datetime
 from pydub import AudioSegment
+from helpers import get_schedule, get_follow_up
 
 load_dotenv()
 
@@ -137,6 +138,18 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
             print(f"Translated User Prompt: {translated_user_prompt}")
 
         # rag_query = get_rag_query(translated_user_prompt)
+
+        schedule = get_schedule(translated_user_prompt)
+        time = schedule.time
+        if time != '':
+            # this is where we will add the reminder to the user's calendar
+            resp = "I have added a reminder to your calendar for " + time
+            return { 'user_prompt': f'{user_prompt}',
+                 'original_response': f'{resp}',
+                 'context' : f'{context}',
+                 'IOT Rows': f'{records}'
+                 }
+
         
 
 
