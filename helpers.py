@@ -153,13 +153,69 @@ def generate_tts_audio(text):
             os.remove(temp_ogg_file.name)
 
 # Example usage
-test = generate_tts_audio("Hello, this is a test message from the AgriBot. How can I help you today?")
-if test:
-    print(f"Media ID: {test}")
-else:
-    print("Failed to generate or upload audio.")
+# test = generate_tts_audio("Hello, this is a test message from the AgriBot. How can I help you today?")
+# if test:
+#     print(f"Media ID: {test}")
+# else:
+#     print("Failed to generate or upload audio.")
+
+
+
+
 
 # sendWhatsappMessage("923200006080", "Hello, this is a test message from the AgriBot. How can I help you today?")
+
+from pydantic import BaseModel
+
+client = OpenAI()
+
+class CalendarEvent(BaseModel):
+    time: str
+    follow_up: bool
+    mood: str
+
+
+
+def get_schedule (prompt ):
+    completion = client.beta.chat.completions.parse(
+    model="gpt-4o-2024-08-06",
+    messages=[
+        {"role": "system", "content": "You will recieve two type of messages one would set a time for daily messages and you would need to extract time in the 24 hour format and the other would be a message which would result in an advice in which you would need to follow up with the user and set the flag to true."},
+        {"role": "user", "content": prompt },
+    ],
+    response_format=CalendarEvent,
+    )
+    return completion.choices[0].message.parsed
+
+class FollowUp(BaseModel):
+    follow_up: bool
+    
+def get_follow_up(prompt):
+    completion = client.beta.chat.completions.parse(
+    model="gpt-4o-2024-08-06",
+    messages=[
+        {"role": "system", "content": "Extract the following details from the user's message: follow-up.Please check if this response is given to a user should we follow up on that or not in the future please decide the flag according to this instruction. If it is not possible to extract this information, please leave it as empty."},
+        {"role": "user", "content": prompt},
+    ],
+    response_format=FollowUp,
+    )
+    return completion.choices[0].message.parsed
+
+
+
+
+print(get_schedule ("Please give me messages tommorow at 6pm"))
+
+print(get_follow_up("Please water the plants"))
+
+
+
+
+
+
+
+
+
 # # read teh data from the json file 
 # def get_crop_prices_by_city(city_name):
 #     try: 

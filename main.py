@@ -70,10 +70,11 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
     try:
 
         # thread_id, user_id = getThreadID(phone)
+        user_id = 1
+
         language = getLanguage(user_id)
         print("User Prompt : ", user_prompt)
         thread_id = "thread_Hq7Rk8o86gUmd2sML0o7ra5Q"
-        user_id = 1
 
         # print(f"Thread: {thread_id}")
         # print(f"User id: {user_id}")
