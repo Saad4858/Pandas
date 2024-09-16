@@ -33,6 +33,7 @@ class User(Base):
     country = Column(String)
     language = Column(String)
     thread_id = Column(String)
+    update_time = Column(String)
 
     # Timestamps
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
@@ -50,6 +51,7 @@ class Message(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     message = Column(String)
     response = Column(String)
+    actionable = Column(String)
 
     # Timestamps
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))

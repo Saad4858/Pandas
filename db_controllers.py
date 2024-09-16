@@ -2,7 +2,7 @@ from db_schema import User, Reading, Message, getEngine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import desc
 
-def addUser(name, address, phone, city, country, language, thread_id):
+def addUser(name, address, phone, city, country, language, thread_id, update_time):
     try:
         # Setup the engine and session
         engine = getEngine()
@@ -12,7 +12,16 @@ def addUser(name, address, phone, city, country, language, thread_id):
         session = Session()
 
         # Step 3: Create an instance of your model
-        new_user = User(name=name, address=address, phone=phone, city=city, country=country, language=language, thread_id=thread_id)
+        new_user = User(
+            name=name, 
+            address=address, 
+            phone=phone, 
+            city=city, 
+            country=country, 
+            language=language, 
+            thread_id=thread_id, 
+            update_time=update_time
+        )
 
         # Step 4: Add the instance to the session
         session.add(new_user)
@@ -103,7 +112,7 @@ def get10ReadingRecordsID(user_id):
         print(f"Error: Could Not Get Latest Readings. Exception: {e}")
         return ""
 
-def addConversation(user_id, message, response):
+def addConversation(user_id, message, response, actionable):
     try:
         # Setup the engine and session
         engine = getEngine()
@@ -116,7 +125,8 @@ def addConversation(user_id, message, response):
         new_message = Message(
             user_id=user_id,
             message=message,
-            response=response
+            response=response,
+            actionable=actionable
         )
 
         # Add the instance to the session
