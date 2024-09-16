@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 import openai
 import requests
-from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID, get10ReadingRecordsID
+from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID, get10ReadingRecordsID , updateUserTime
 
 from weather_api import get_current_weather_data , get_forecast
 import tempfile
@@ -143,7 +143,10 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         time = schedule.time
         if time != '':
             # this is where we will add the reminder to the user's calendar
+
             resp = "I have added a reminder to your calendar for " + time
+            updateUserTime(user_id, time)
+
             return { 'user_prompt': f'{user_prompt}',
                  'original_response': f'{resp}',
                  'context' : f'{""}',
