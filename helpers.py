@@ -188,8 +188,8 @@ def get_schedule (prompt ):
     messages=[
         {
         "role": "system",
-        "content": f"You will receive various types of messages. If the message is about setting a time for daily responses, extract the time in 24-hour format for scheduling and include this in the response if you need to make a judgment based on the current time it is {current_time}  at the date {current_date}. If the message is a query or request for advice, respond accordingly and determine whether the response requires a follow-up  , follow up would not be true if you have response that wants to schedule. If the response indicates an ongoing action or task (e.g., reminders, tasks to complete), set the follow-up flag to true. If the response resolves the query fully without need for further action, set the follow-up flag to false. Always base the follow-up flag on whether future check-ins or reminders are necessary."
-        },
+        "content": "You will receive various types of messages. If the message is about setting a time for daily responses, extract the time in 24-hour format for scheduling. When making a judgment based on the current time, assume the time is {current_time} and the date is {current_date}, both in the Asia/Karachi timezone. If no time is extracted from the user's message, return an empty string. If the message is a query or request for advice, respond accordingly and determine whether the response requires a follow-up. Do not set the follow-up flag to true if the response is focused on scheduling. If the response involves an ongoing action or task (e.g., reminders, tasks to complete), set the follow-up flag to true. If the query is fully resolved without need for further action, set the follow-up flag to false.Always base the follow-up flag on whether future check-ins or reminders are necessary."
+        }
 
         {"role": "user", "content": prompt },
     ],
