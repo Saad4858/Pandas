@@ -261,6 +261,11 @@ async def generate_tts_audio(text:str):
         # Check if MP3 file was generated successfully
         if not os.path.exists(temp_mp3_file.name) or os.path.getsize(temp_mp3_file.name) == 0:
             raise Exception("OpenAI TTS audio generation failed or produced an empty file.")
+        if not os.path.exists(temp_mp3_file.name):
+            print("File does not exist")
+        else:
+            print("File exists")
+        print(temp_mp3_file)
 
         # Convert MP3 to OGG
         print("Checkpoint 2")
