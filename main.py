@@ -293,10 +293,12 @@ async def generate_tts_audio(text:str):
             print(response.json())
 
             # Handle response and extract media ID
+            print(f"Response from WhatsApp Cloud API: {response.text}")  # Log the raw response
+
             response.raise_for_status()
             media_id = response.json().get('id')
             return {
-                "media_id": media_id
+                "media_id": f'{media_id}'
             }
 
     except Exception as e:
