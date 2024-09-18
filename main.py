@@ -295,7 +295,9 @@ async def generate_tts_audio(text:str):
             # Handle response and extract media ID
             response.raise_for_status()
             media_id = response.json().get('id')
-            return media_id
+            return {
+                "media_id": media_id
+            }
 
     except Exception as e:
         print(f"Error: {e}")  # Print the specific error message for better debugging
