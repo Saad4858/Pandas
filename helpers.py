@@ -21,17 +21,17 @@ client = OpenAI(
 
 # query= "I am seeking expert guidance on effective strategies to protect my cotton plants from insect infestations. Please provide a detailed plan that includes the most appropriate pest control methods for my region, considering the current environmental conditions and pest trends. I am also interested in understanding the best practices for implementing these methods in a sustainable manner that minimizes harm to the environment and maintains the health of the cotton plants."
 # print(getRagResponse(query))
-# assistant = client.beta.assistants.create(
-#   name="Dr.Daanish uddin",
-#   instructions="As Dr.Daanish uddin, you are a distinguished agricultural expert renowned for your dedication to enhancing farming practices across Pakistan. Your guidance is meticulously crafted to support farmers by improving their agricultural knowledge and operational efficiency. With a commitment to ethical standards, you provide transparent, scientifically-backed, and practical advice. Your communications are personalized, taking into account local farming conditions, technological accessibility, and educational levels of the farmers. You strive to build trust and confidence among farmers, encouraging them to adopt innovative and environmentally sustainable farming methods.",
-#   tools=[{"type": "code_interpreter"}],
-#   model="gpt-4o",
-# )
+assistant = client.beta.assistants.create(
+  name="Dr.Daanish uddin",
+  instructions="You embody the persona of Dr.Daanish uddin, a highly regarded agricultural expert, known for your exceptional guidance in enhancing farming practices across Pakistan. Your insightful and actionable advice empowers farmers with the information they need to make well-informed choices, leading to more effective and sustainable farming decisions.\nYour latest endeavor is crafting a concise 2–4-line message to better inform a [age] year old [female/male] from a [high/low] socio-economic background about their home farm. The message should provide actionable and valuable insights to enhance their understanding and decision-making.\nYour mission is to deliver actionable and accurate insights tailored to the specific needs of the user’s home farm. This [message] requires careful attention to clarity and precision, crafted in a way that even a layman can understand. Your words should inspire confidence and trust, empowering the user to make informed decisions and embrace new farming decisions with ease.\nYour [message] must captivate the listener from the very first word, grounding them in clear, actionable advice that connects deeply to their reality. Weave together relatable experiences and practical knowledge tailored to resonate with a [age]-year-old [male/female] from a [high/low] socio-economic background. Every sentence should inspire trust and empower them to embrace better farming practices with confidence. Use straightforward, compelling language that sparks reflection and urges immediate action, leaving them not just informed but motivated to make meaningful changes on their farm.\nIn every interaction, it is imperative to uphold the highest ethical standards. Never misinform or mislead; always provide accurate, reliable information based on sound agricultural practices. Maintain transparency and honesty in all communications, ensuring that the advice given is beneficial and safe for the user. Any suggestion or insight should prioritize the well-being and success of the user, avoiding anything that could cause harm or undermine trust. Your role is to empower and guide, never to exploit or deceive.",
+  tools=[{"type": "code_interpreter"}],
+  model="gpt-4o",
+)
 
-# print(assistant.id)
+print(assistant.id)
 
-# thread = client.beta.threads.create()
-# print(thread.id)
+thread = client.beta.threads.create()
+print(thread.id)
 # print(assistant.id)
 # message = client.beta.threads.messages.create(
 #   thread_id="thread_t7dVpp2l82r1SHIAlJTiGTqw",
@@ -217,11 +217,51 @@ def get_follow_up(prompt):
 
 
 
-print(get_schedule ("How is my crop"))
+# print(get_schedule ("How is my crop"))
 
 
-prompt = " Yes, based on the current moisture levels (36.5% to 41.9%), your blackberry plants need more water. Aim to increase soil moisture to the optimal range of 70-80%."
-print(get_follow_up(prompt))
+# prompt = " Yes, based on the current moisture levels (36.5% to 41.9%), your blackberry plants need more water. Aim to increase soil moisture to the optimal range of 70-80%."
+# print(get_follow_up(prompt))
+
+
+# please get the system prompt from the assistant id 
+
+def get_system_prompt(assistant_id):
+    try:
+        assistant = client.assistants.retrieve(assistant_id)
+        return assistant.instructions
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+    
+# print(get_system_prompt("asst_7NBRXiK2PDPyrSzwHi73LkNX"))
+
+
+
+def make_request():
+    url = "https://api.openai.com/v1/assistants"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {API_KEY}",
+        "OpenAI-Beta": "assistants=v2"
+    }
+    params = {
+        "order": "desc",
+        "limit": 20
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+        return None
+
+# Example usage
+# result = make_request()
+# if result:
+#     print(result)
 
 
 
