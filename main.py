@@ -248,6 +248,7 @@ async def generate_tts_audio(text:str):
 
     try:
         # Generate TTS audio (MP3)
+        print("Checkpoint 1")
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_mp3_file:
             with OPENAI_CLIENT.audio.speech.with_streaming_response.create(
                 model="tts-1",
@@ -262,6 +263,7 @@ async def generate_tts_audio(text:str):
             raise Exception("OpenAI TTS audio generation failed or produced an empty file.")
 
         # Convert MP3 to OGG
+        print("Checkpoint 2")
         sound = AudioSegment.from_mp3(temp_mp3_file.name)
         with tempfile.NamedTemporaryFile(delete=False, suffix=".ogg") as temp_ogg_file:
             sound.export(temp_ogg_file.name, format="ogg")
@@ -270,7 +272,7 @@ async def generate_tts_audio(text:str):
         # Check if OGG file was generated successfully
         if not os.path.exists(temp_ogg_file.name) or os.path.getsize(temp_ogg_file.name) == 0:
             raise Exception("MP3 to OGG conversion failed or produced an empty file.")
-
+        print("Checkpoint 3")
         # Upload to WhatsApp Cloud API Media Library
         with open(temp_ogg_file.name, 'rb') as audio_file:
             files = {
