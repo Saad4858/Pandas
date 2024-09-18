@@ -5,6 +5,7 @@ import os
 from rag import getRagResponse
 import tempfile
 
+from datetime import datetime
 from openai import OpenAI
 
 load_dotenv()
@@ -161,6 +162,7 @@ def generate_tts_audio(text):
 
 
 
+# get current date time 
 
 
 # sendWhatsappMessage("923200006080", "Hello, this is a test message from the AgriBot. How can I help you today?")
@@ -173,6 +175,11 @@ class CalendarEvent(BaseModel):
     time: str
     follow_up: bool
 
+current_date = datetime.now().date()
+# extract current time in 24 hour format
+current_time = datetime.now().strftime("%H:%M")
+
+
 
 
 def get_schedule (prompt ):
@@ -181,7 +188,7 @@ def get_schedule (prompt ):
     messages=[
         {
         "role": "system",
-        "content": "You will receive various types of messages. If the message is about setting a time for daily responses, extract the time in 24-hour format for scheduling and include this in the response. If the message is a query or request for advice, respond accordingly and determine whether the response requires a follow-up  , follow up would not be true if you have response that wants to schedule. If the response indicates an ongoing action or task (e.g., reminders, tasks to complete), set the follow-up flag to true. If the response resolves the query fully without need for further action, set the follow-up flag to false. Always base the follow-up flag on whether future check-ins or reminders are necessary."
+        "content": f"You will receive various types of messages. If the message is about setting a time for daily responses, extract the time in 24-hour format for scheduling and include this in the response if you need to make a judgment based on the current time it is {current_time}  at the date {current_date}. If the message is a query or request for advice, respond accordingly and determine whether the response requires a follow-up  , follow up would not be true if you have response that wants to schedule. If the response indicates an ongoing action or task (e.g., reminders, tasks to complete), set the follow-up flag to true. If the response resolves the query fully without need for further action, set the follow-up flag to false. Always base the follow-up flag on whether future check-ins or reminders are necessary."
         },
 
         {"role": "user", "content": prompt },
