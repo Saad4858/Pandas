@@ -196,8 +196,12 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         )
             print(messages.data[0].content[0].text.value)
             response = (messages.data[0].content[0].text.value)
+
+            follow = get_follow_up(response)
+            follow_up = follow.follow_up
+
             
-            addConversation(user_id, user_prompt, response)
+            addConversation(user_id, user_prompt, response, follow_up)
         # print(messages)
         else:
             print(run.status)
