@@ -12,6 +12,8 @@ from rag_query_template import get_rag_query
 from datetime import datetime
 from pydub import AudioSegment
 from helpers import get_schedule, get_follow_up
+import subprocess
+
 
 load_dotenv()
 
@@ -271,7 +273,8 @@ async def generate_tts_audio(text:str):
         print("Checkpoint 2")
         try:
             print("name of temp_mp3_file",temp_mp3_file.name)
-            
+            check_ffmpeg()
+
             sound = AudioSegment.from_mp3(temp_mp3_file.name)
             print("Checkpoint 2.1")
             print("temp_ogg_file",temp_ogg_file)
@@ -342,5 +345,16 @@ async def add_reading_record(pH: float, nitrogen: float, phosphorous: float, pot
         print(e)
         return {'message':'failure adding reading record'}
 
+def check_ffmpeg():
+    try:
+        subprocess.run(["ffmpeg", "-version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        print("FFmpeg is installed and accessible!")
+    except FileNotFoundError:
+        print("FFmpeg is not installed or not in your system's PATH.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running FFmpeg: {e}")
+
+if __name__ == "__main__":
+    check_ffmpeg()
 
 
