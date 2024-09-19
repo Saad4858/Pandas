@@ -269,9 +269,19 @@ async def generate_tts_audio(text:str):
 
         # Convert MP3 to OGG
         print("Checkpoint 2")
-        sound = AudioSegment.from_mp3(temp_mp3_file.name)
-        print("Checkpoint 2.1")
-        print("temp_ogg_file",temp_ogg_file)
+        try:
+            print("name of temp_mp3_file",temp_mp3_file.name)
+            
+            sound = AudioSegment.from_mp3(temp_mp3_file.name)
+            print("Checkpoint 2.1")
+            print("temp_ogg_file",temp_ogg_file)
+        except Exception as e:
+            print("error in exception:",e)
+            return {'message':'failure converting mp3 to ogg'}
+        
+        # sound = AudioSegment.from_mp3(temp_mp3_file.name)
+        # print("Checkpoint 2.1")
+        # print("temp_ogg_file",temp_ogg_file)
         
         with tempfile.NamedTemporaryFile(delete=False, suffix=".ogg") as temp_ogg_file:
             sound.export(temp_ogg_file.name, format="ogg")
