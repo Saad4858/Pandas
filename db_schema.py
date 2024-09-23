@@ -33,7 +33,12 @@ class User(Base):
     country = Column(String)
     language = Column(String)
     thread_id = Column(String)
+    assistant_id = Column(String)
     update_time = Column(String)
+    gender = Column(String)
+    age = Column(String)
+    socioeconomic = Column(String)
+    TypeOfFarm = Column(String)
 
     # Timestamps
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))

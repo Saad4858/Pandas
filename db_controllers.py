@@ -2,7 +2,7 @@ from db_schema import User, Reading, Message, getEngine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import desc
 
-def addUser(name, address, phone, city, country, language, thread_id, update_time):
+def addUser(name, address, phone, city, country, language, thread_id, assistant_id, update_time, gender, age, socioeconomic, TypeOfFarm):
     try:
         # Setup the engine and session
         engine = getEngine()
@@ -20,7 +20,12 @@ def addUser(name, address, phone, city, country, language, thread_id, update_tim
             country=country, 
             language=language, 
             thread_id=thread_id, 
-            update_time=update_time
+            assistant_id=assistant_id,
+            update_time=update_time,
+            gender=gender,
+            age=age,
+            socioeconomic=socioeconomic,
+            TypeOfFarm=TypeOfFarm
         )
 
         # Step 4: Add the instance to the session
@@ -33,6 +38,45 @@ def addUser(name, address, phone, city, country, language, thread_id, update_tim
         session.close()
     except Exception as e:
         print(f"Error: Could Not Add User. Exception: {e}")
+
+def getUserDetails(user_id):
+    try:
+        # Setup the engine and session
+        engine = getEngine()
+        Session = sessionmaker(bind=engine)
+        
+        # Step 2: Create a session
+        session = Session()
+        
+        # Step 3: Query the User by user_id
+        user = session.query(User).filter(User.id == user_id).first()
+
+        # Close the session
+        session.close()
+
+        # Step 4: Check if the user exists and return details
+        if user:
+            return {
+                "user_id": user.id,
+                "name": user.name,
+                "address": user.address,
+                "phone": user.phone,
+                "city": user.city,
+                "country": user.country,
+                "language": user.language,
+                "thread_id": user.thread_id,
+                "assistant_id": user.assistant_id,
+                "update_time": user.update_time,
+                "gender": user.gender,
+                "age": user.age,
+                "socioeconomic": user.socioeconomic,
+                "TypeOfFarm": user.TypeOfFarm
+            }
+        else:
+            return f"No user found with ID {user_id}"
+
+    except Exception as e:
+        return f"Error: Could not retrieve user details. Exception: {e}"
 
 def addReadingRecord(pH, nitrogen, phosphorous, potassium, temperature, moisture, conductivity, battery, user_id):
     try: 
