@@ -226,10 +226,10 @@ def getThreadID(phone):
         else:
             # If the user does not exist, return None or handle accordingly
             print("Error: Could Not Get User Thread")
-            return "", ""
+            return "", "" ,""
     except Exception as e:
         print(f"Error: Could Not Get User Thread. Exception: {e}")
-        return "", ""
+        return "", "" ,""
 
 def updateUserTime(user_id, new_update_time):
     try:
