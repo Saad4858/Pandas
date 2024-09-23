@@ -87,7 +87,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         records = ""
 
         # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
-        if (user_id == 1):
+        if (user_id == 2 or user_id == 3):
             records = get10ReadingRecords()
         else:
             records = get10ReadingRecordsID(user_id)
@@ -162,10 +162,8 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         rag_prompt = ""
 
-        if (user_id == 3):
-            rag_prompt = rag_prompt + "For Blackberries: \n" + translated_user_prompt
-        else:
-            rag_prompt = translated_user_prompt
+        
+        rag_prompt = translated_user_prompt
         
 
         rag_info = agent.query(str(rag_prompt)) # Temporary For Now
