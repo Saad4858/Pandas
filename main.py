@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 import openai
 import requests
-from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID, get10ReadingRecordsID , updateUserTime
+from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID, get10ReadingRecordsID , updateUserTime , getUserDetails
 
 from weather_api import get_current_weather_data , get_forecast
 import tempfile
@@ -72,12 +72,14 @@ async def transcribe_audio(request: Request):
 async def get_translated_response(user_prompt: str , language: str, phone: str):
     try:
 
-        # thread_id, user_id = getThreadID(phone)
-        user_id = 1
+        thread_id,assistant_id, user_id  = getThreadID(phone)
+        print(f"Thread: {thread_id} Assistant: {assistant_id} User: {user_id}")
+        # user_id = 1
+        
 
         language = getLanguage(user_id)
-        print("User Prompt : ", user_prompt)
-        thread_id = "thread_cDa3oaaAf5nyjDJV1kDs7hxk"
+        # print("User Prompt : ", user_prompt)
+        # thread_id = "thread_cDa3oaaAf5nyjDJV1kDs7hxk"
 
         # print(f"Thread: {thread_id}")
         # print(f"User id: {user_id}")
@@ -185,11 +187,22 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         role="user",
         content=f"{user_prompt}"
         )
+        details = getUserDetails(user_id)
+        
+        age = details["age"]
+        gender = details["gender"]
+        socio = details["socioeconomic"]
+
+        print(f"Age: {age} Gender :{gender} Socio: {socio}")
 
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id=thread_id,
-        assistant_id="asst_r8rBP27vya1OA0EaFTWHDqu9",
-        instructions=f"You are a helpful assistant who has great knowledge of agriculture. You answer in simple language with no markdown. Provide Natural language responses with no markdown. Keep your answers short, to the point and to a maximum of two to three sentences. Do not mention technical details in your answer. The date today is {current_date}.\nUser profile: {profile}.\nThe user's farmland has the following record: {str(final_records)} and the following is additional information: {context}.\nThe current weather situation is as follows: {current_weather_data}. The forecast for the next week in 6 hours intervals is as follows: {six_hour_forecast}."
+        assistant_id=assistant_id,
+        instructions=f"You are a helpful assistant with great knowledge of agriculture. Your responses are brief, clear, and to the point (maximum of two to three sentences). Avoid unnecessary technical jargon, but keep advice actionable and relatable.
+                        The current date is {current_date}.
+                        User profile: {age}-year-old {gender} from a {socio} socio-economic background.
+                        The user's farmland record is as follows: {final_records}. Additional context: {context}. The current weather conditions are: {current_weather_data}, and the forecast for the next week (in 6-hour intervals) is: {six_hour_forecast}.
+                        "
         )
         response = ""
         if run.status == 'completed': 
