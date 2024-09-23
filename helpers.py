@@ -28,7 +28,7 @@ def generate_advice(age, gender, socioeconomic_background, farm_details):
 
     return advice
 
-system_prompt = generate_advice(20,"Male","High","Home Farm")
+system_prompt = generate_advice(35,"Male","Low","Commercial Farm")
 
 
 assistant = client.beta.assistants.create(
