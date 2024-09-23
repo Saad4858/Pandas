@@ -222,7 +222,7 @@ def getThreadID(phone):
         if user:
             # If the user exists, return the thread_id
             session.close()
-            return user.thread_id, user.id
+            return user.thread_id, user.assistant_id, user.id
         else:
             # If the user does not exist, return None or handle accordingly
             print("Error: Could Not Get User Thread")
