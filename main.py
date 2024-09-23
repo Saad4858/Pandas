@@ -133,7 +133,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
             completion_response = OPENAI_CLIENT.chat.completions.create(
                 model = 'gpt-4o',
                 messages=[
-                    {"role": "system", "content": f"Please translate the following message to English. Do not make any changes to the message itself. If it is already in english, return the message exactly as it was received"},
+                    {"role": "system", "content": f"Please translate the following message to English. Do not make any changes to the message itself, do not remove or add anything else to your translation. Provide only the translation. If it is already in english, return the message exactly as it was received."},
                     {"role": "user", "content": f"{user_prompt}"}
                 ]
             )
@@ -192,13 +192,14 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         age = details["age"]
         gender = details["gender"]
         socio = details["socioeconomic"]
+        crop = details["crop"]
 
-        print(f"Age: {age} Gender :{gender} Socio: {socio}")
+        print(f"Age: {age} Gender :{gender} Socio: {socio}, crop: {crop}")
 
         run = OPENAI_CLIENT.beta.threads.runs.create_and_poll(
         thread_id=thread_id,
         assistant_id=assistant_id,
-        instructions=f"You are a helpful assistant with great knowledge of agriculture. Your responses are brief, clear, and to the point (maximum of two to three sentences). Avoid unnecessary technical jargon, but keep advice actionable and relatable.\nThe current date is {current_date}. \nUser profile: {age}-year-old {gender} from a {socio} socio-economic background.\nThe user's farmland record is as follows: {final_records}. Additional context: {context}. The current weather conditions are: {current_weather_data}, and the forecast for the next week (in 6-hour intervals) is: {six_hour_forecast}."
+        instructions=f"You are a helpful assistant with great knowledge of agriculture. Your responses are brief, clear, and to the point (maximum of two to three sentences). Avoid unnecessary technical jargon, but keep advice actionable and relatable.\nThe current date is {current_date}. \nUser profile: {age}-year-old {gender} from a {socio} socio-economic background who is growing {crop}.\nThe user's farmland record is as follows: {final_records}. Additional context: {context}. The current weather conditions are: {current_weather_data}, and the forecast for the next week (in 6-hour intervals) is: {six_hour_forecast}."
         )
         response = ""
         if run.status == 'completed': 

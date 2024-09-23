@@ -39,6 +39,7 @@ class User(Base):
     age = Column(String)
     socioeconomic = Column(String)
     TypeOfFarm = Column(String)
+    crop = Column(String)
 
     # Timestamps
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))

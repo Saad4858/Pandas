@@ -2,7 +2,7 @@ from db_schema import User, Reading, Message, getEngine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import desc
 
-def addUser(name, address, phone, city, country, language, thread_id, assistant_id, update_time, gender, age, socioeconomic, TypeOfFarm):
+def addUser(name, address, phone, city, country, language, thread_id, assistant_id, update_time, gender, age, socioeconomic, TypeOfFarm, crop):
     try:
         # Setup the engine and session
         engine = getEngine()
@@ -25,7 +25,8 @@ def addUser(name, address, phone, city, country, language, thread_id, assistant_
             gender=gender,
             age=age,
             socioeconomic=socioeconomic,
-            TypeOfFarm=TypeOfFarm
+            TypeOfFarm=TypeOfFarm,
+            crop=crop
         )
 
         # Step 4: Add the instance to the session
@@ -70,7 +71,8 @@ def getUserDetails(user_id):
                 "gender": user.gender,
                 "age": user.age,
                 "socioeconomic": user.socioeconomic,
-                "TypeOfFarm": user.TypeOfFarm
+                "TypeOfFarm": user.TypeOfFarm,
+                "crop": user.crop
             }
         else:
             return f"No user found with ID {user_id}"
