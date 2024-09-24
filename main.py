@@ -141,6 +141,10 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
             translated_user_prompt = completion_response.choices[0].message.content
             print(f"Translated User Prompt: {translated_user_prompt}")
 
+            print(f"Translation Prompt Tokens: {completion_response['usage']['prompt_tokens']}")
+            print(f"Translation Completion Tokens: {completion_response['usage']['completion_tokens']}")
+            print(f"Total Translation Tokens: {completion_response['usage']['total_tokens']}")
+
         # rag_query = get_rag_query(translated_user_prompt)
 
         schedule = get_schedule(translated_user_prompt)
@@ -207,6 +211,10 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
             print(messages.data[0].content[0].text.value)
             response = (messages.data[0].content[0].text.value)
 
+            print(f"Completion Prompt Tokens: {run['usage']['prompt_tokens']}")
+            print(f"Completion Output Tokens: {run['usage']['completion_tokens']}")
+            print(f"Total Completion Tokens: {run['usage']['total_tokens']}")
+
             follow = get_follow_up(response)
             follow_up = follow.follow_up
 
@@ -239,6 +247,10 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         )
 
         translated_response = completion_response.choices[0].message.content
+
+        print(f"Translation Back to User Prompt Tokens: {completion_response['usage']['prompt_tokens']}")
+        print(f"Translation Back to User Completion Tokens: {completion_response['usage']['completion_tokens']}")
+        print(f"Total Translation Back to User Tokens: {completion_response['usage']['total_tokens']}")
         
         return { 'user_prompt': f'{user_prompt}',
                  'original_response': f'{translated_response}',

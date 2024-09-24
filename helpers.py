@@ -206,6 +206,16 @@ def get_schedule (prompt ):
     ],
     response_format=CalendarEvent,
     )
+
+    prompt_tokens = completion['usage']['prompt_tokens']
+    completion_tokens = completion['usage']['completion_tokens']
+    total_tokens = completion['usage']['total_tokens']
+
+    # Log or print the token usage
+    print(f"Prompt Tokens: {prompt_tokens}")
+    print(f"Completion Tokens: {completion_tokens}")
+    print(f"Total Tokens: {total_tokens}")
+    
     return completion.choices[0].message.parsed
 
 class FollowUp(BaseModel):
