@@ -88,4 +88,15 @@ class Reading(Base):
     # Relationship
     user = relationship("User", back_populates="readings")
 
+# Updated AppUsage class
+class AppUsage(Base):
+    __tablename__ = 'app_usage'
+
+    id = Column(Integer, primary_key=True)
+    access_time = Column(DateTime, default=lambda: datetime.now(timezone.utc))  # Automatically logs the access time
+    session_id = Column(String(255), nullable=False)  # Session ID (required for linking time spent)
+    ip_address = Column(String(50), nullable=False)  # User's IP address
+    user_agent = Column(String, nullable=False)  # Browser or client details
+    time_spent = Column(Integer, nullable=True)  # Time spent in seconds (optional initially)
+
 Base.metadata.create_all(engine)

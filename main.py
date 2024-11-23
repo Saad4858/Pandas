@@ -87,12 +87,12 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         records = ""
 
         # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
-        if (user_id == 2 or user_id == 3):
-            records = get10ReadingRecords()
-        else:
-            records = get10ReadingRecordsID(user_id)
+        # if (user_id == 2 or user_id == 3):
+        #     records = get10ReadingRecords()
+        # else:
+        #     records = get10ReadingRecordsID(user_id)
 
-        # records = get10ReadingRecords()
+        records = get10ReadingRecords()
 
         formatted_records = []
 
@@ -144,6 +144,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         schedule = get_schedule(translated_user_prompt)
         time = schedule.time
+
         if time != '':
             # this is where we will add the reminder to the user's calendar
 
@@ -157,17 +158,25 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
                  }
 
         
+        completion_response = OPENAI_CLIENT.chat.completions.create(
+            model = 'gpt-4o',
+            messages=[
+                {"role": "system", "content": f"Your task is to take simple, user-provided inputs related to agriculture and rewrite them in a detailed, academic, and professional tone. Expand each prompt by including relevant context, such as definitions, explanations, or connections to agricultural practices, challenges, or scientific concepts. Ensure the rewritten prompt is clear, logically structured, and suitable for querying a research-focused system. The aim is to enhance the query's depth and relevance for retrieving comprehensive and accurate agricultural information."},
+                {"role": "user", "content": f"{translated_user_prompt}"}
+            ]
+        )
 
+        rag_prompt = completion_response.choices[0].message.content
 
-        rag_prompt = ""
+        # rag_prompt = ""
 
         
-        rag_prompt = translated_user_prompt
+        # rag_prompt = translated_user_prompt
         
 
         rag_info = agent.query(str(rag_prompt)) # Temporary For Now
 
-        context = "\n" + str(rag_info) + "\n"  
+        
         profile = "" 
 
         if (user_id == 3):
@@ -190,6 +199,8 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         gender = details["gender"]
         socio = details["socioeconomic"]
         crop = details["crop"]
+
+        context = f"For {crop}: \n" + str(rag_info) + "\n"  
 
         print(f"Age: {age} Gender :{gender} Socio: {socio}, crop: {crop}")
 

@@ -261,3 +261,5 @@ def updateUserTime(user_id, new_update_time):
 
     except Exception as e:
         print(f"Error: Could not update update_time. Exception: {e}")
+
+# addUser("Hassan Khan", "Kasur", "9", "Lahore", "Pakistan", "language", "thread_id", "assistant_id", "09:00", "male", "60", "high", "commercial", "sugarcane")
