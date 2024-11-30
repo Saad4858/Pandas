@@ -234,7 +234,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         
         print(f"Users Language: {language}")
         if language == "English":
-            addConversationWithTranslation(user_id, user_prompt, translated_user_prompt, rag_info, response, response)
+            addConversationWithTranslation(user_id, user_prompt, translated_user_prompt, rag_prompt, response, response)
             return { 'user_prompt': f'{user_prompt}',
                  'original_response': f'{response}',
                  'context' : f'{context}',
@@ -251,7 +251,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         translated_response = completion_response.choices[0].message.content
 
-        addConversationWithTranslation(user_id, user_prompt, translated_user_prompt, rag_info, response, translated_response)
+        addConversationWithTranslation(user_id, user_prompt, translated_user_prompt, rag_prompt, response, translated_response)
         
         return { 'user_prompt': f'{user_prompt}',
                  'original_response': f'{translated_response}',
