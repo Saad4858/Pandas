@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 import openai
 import requests
-from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID, get10ReadingRecordsID , updateUserTime , getUserDetails
+from db_controllers import addReadingRecord, addUser, get10ReadingRecords, getLanguage, addConversation, getThreadID, get10ReadingRecordsID , updateUserTime , getUserDetails, addConversationWithTranslation
 
 from weather_api import get_current_weather_data , get_forecast
 import tempfile
@@ -170,11 +170,16 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         # rag_prompt = ""
 
+        details = getUserDetails(user_id)
         
-        # rag_prompt = translated_user_prompt
-        
+        age = details["age"]
+        gender = details["gender"]
+        socio = details["socioeconomic"]
+        crop = details["crop"]
 
-        rag_info = agent.query(str(rag_prompt)) # Temporary For Now
+        rag_prompt = str(rag_prompt)
+        rag_prompt = f"For {crop}: \n" + rag_prompt
+        rag_info = agent.query(str(rag_prompt))
 
         
         profile = "" 
@@ -191,16 +196,11 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         message = OPENAI_CLIENT.beta.threads.messages.create(
         thread_id=thread_id,
         role="user",
-        content=f"{user_prompt}"
+        content=f"{translated_user_prompt}"
         )
-        details = getUserDetails(user_id)
         
-        age = details["age"]
-        gender = details["gender"]
-        socio = details["socioeconomic"]
-        crop = details["crop"]
 
-        context = f"For {crop}: \n" + str(rag_info) + "\n"  
+        context = "\n" + str(rag_info) + "\n"  
 
         print(f"Age: {age} Gender :{gender} Socio: {socio}, crop: {crop}")
 
@@ -234,6 +234,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         
         print(f"Users Language: {language}")
         if language == "English":
+            addConversationWithTranslation(user_id, user_prompt, translated_user_prompt, rag_info, response, response)
             return { 'user_prompt': f'{user_prompt}',
                  'original_response': f'{response}',
                  'context' : f'{context}',
@@ -249,6 +250,8 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         )
 
         translated_response = completion_response.choices[0].message.content
+
+        addConversationWithTranslation(user_id, user_prompt, translated_user_prompt, rag_info, response, translated_response)
         
         return { 'user_prompt': f'{user_prompt}',
                  'original_response': f'{translated_response}',

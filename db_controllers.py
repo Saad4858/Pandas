@@ -1,4 +1,4 @@
-from db_schema import User, Reading, Message, getEngine
+from db_schema import User, Reading, Message, MessageWithTranslation, getEngine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import desc
 
@@ -183,6 +183,37 @@ def addConversation(user_id, message, response, actionable):
 
         # Close the session
         session.close()
+    except Exception as e:
+        print(f"Error: Could Not Add Conversation. Exception: {e}")
+
+def addConversationWithTranslation(user_id, message, translated_message, rag_message, response, translated_response):
+    try:
+        # Setup the engine and session
+        engine = getEngine()
+        Session = sessionmaker(bind=engine)
+
+        # Create a session
+        session = Session()
+
+        # Create an instance of the MessageWithTranslation model
+        new_message = MessageWithTranslation(
+            user_id=user_id,
+            message=message,
+            translated_message=translated_message,
+            rag_message=rag_message,
+            response=response,
+            translated_response=translated_response  # New field
+        )
+
+        # Add the instance to the session
+        session.add(new_message)
+
+        # Commit the transaction
+        session.commit()
+
+        # Close the session
+        session.close()
+        print("Conversation added successfully.")
     except Exception as e:
         print(f"Error: Could Not Add Conversation. Exception: {e}")
 
