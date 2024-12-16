@@ -161,7 +161,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         completion_response = OPENAI_CLIENT.chat.completions.create(
             model = 'gpt-4o',
             messages=[
-                {"role": "system", "content": f"Your task is to take simple, user-provided inputs related to agriculture and rewrite them in a detailed, academic, and professional tone. Expand each prompt by including relevant context, such as definitions, explanations, or connections to agricultural practices, challenges, or scientific concepts. Ensure the rewritten prompt is clear, logically structured, and suitable for querying a research-focused system. The aim is to enhance the query's depth and relevance for retrieving comprehensive and accurate agricultural information."},
+                {"role": "system", "content": f"Your task is to rewrite user-provided queries related to agriculture in a concise yet academically and professionally refined tone. Limit responses to a maximum of two to three sentences, ensuring clarity, precision, and relevance for research purposes. Avoid excessive elaboration while maintaining a focus on delivering a well-structured and contextually enriched query."},
                 {"role": "user", "content": f"{translated_user_prompt}"}
             ]
         )

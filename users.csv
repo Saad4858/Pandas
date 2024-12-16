@@ -1,4 +1,6 @@
-country,TypeOfFarm,language,crop,thread_id,created_at,address,assistant_id,updated_at,id,update_time,name,gender,phone,age,city,socioeconomic
-Pakistan,Commercial,Urdu,Aloe Vera,thread_4ifK1nsYSm1DMcwruR4P4e8l,2024-09-23 23:26:11,LUMS,asst_GB0e5GDJ1pHJfiYhOgTA03gb,2024-09-23 23:26:11,1,09:00,Laiba,male,923084341993,35,Lahore,Low
-Pakistan,Commercial,English,Aloe Vera,thread_GkwhuSTJWlmQBOumpUDHl0Pc,2024-09-23 18:37:48,LUMS,asst_SKPEs6NI4qC6BBSta6YyzkCf,2024-09-23 18:37:48,2,09:00,Saad,male,923200006080,22,Lahore,High
-Pakistan,Commercial,Urdu,Aloe Vera,thread_Zt22KvSBhxLKdEfuQI564cgr,2024-09-23 23:38:06,LUMS,asst_Lr0ngQaaoltNgRZBFzkwBo2o,2024-09-23 23:38:06,3,09:00,Daanish,male,923224661550,60,Lahore,Low
+phone,age,city,socioeconomic,country,TypeOfFarm,language,crop,thread_id,created_at,address,assistant_id,updated_at,id,update_time,name,gender
+923224661550,60,Lahore,Low,Pakistan,Commercial,Urdu,Sugarcane,thread_Zt22KvSBhxLKdEfuQI564cgr,2024-09-26 11:38:06,LUMS,asst_Lr0ngQaaoltNgRZBFzkwBo2o,2024-09-26 11:38:06.000000,3,09:23,Daanish,male
+923084341993,35,Lahore,Low,Pakistan,Commercial,Urdu,Sugarcane,thread_4ifK1nsYSm1DMcwruR4P4e8l,2024-09-24 09:26:11,LUMS,asst_GB0e5GDJ1pHJfiYhOgTA03gb,2024-09-24 09:26:11.000000,1,10:00,Laiba,male
+923084219892,54,Lahore,low,Pakistan,commercial,Urdu,sugarcane,thread_AGYq910x0h4eL6JjJfRRKsSy,2024-11-25 05:37:05,Kasur,asst_OeU79m0niBWbGtBImWMFtmMw,2024-11-25 05:37:05.000000,5,09:00,Nazir Hussain,male
+923334341662,60,Lahore,high,Pakistan,commercial,Urdu,sugarcane,thread_HsTXBUpKGIYZoMpJXCtFhgdg,2024-11-25 05:35:11,Kasur,asst_waufiHp7BqeuPNzs1F1Mr3Mn,2024-11-25 05:35:11.000000,4,09:00,Hassan Khan,male
+923200006080,22,Lahore,High,Pakistan,Commercial,English,Sugarcane,thread_GkwhuSTJWlmQBOumpUDHl0Pc,2024-09-23 23:37:48,LUMS,asst_SKPEs6NI4qC6BBSta6YyzkCf,2024-11-24 04:10:01.192051,2,13:49,Saad,male

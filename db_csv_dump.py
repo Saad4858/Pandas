@@ -1,4 +1,4 @@
-from db_schema import User, Reading, Message, getEngine
+from db_schema import User, Reading, Message, MessageWithTranslation, getEngine
 from sqlalchemy.orm import sessionmaker
 import pandas as pd
 
@@ -28,6 +28,7 @@ def export_table_to_csv(table_class, csv_filename):
 # Export each table to a separate CSV file
 export_table_to_csv(User, 'users.csv')
 export_table_to_csv(Message, 'messages.csv')
+export_table_to_csv(MessageWithTranslation, 'messages_translation.csv')
 export_table_to_csv(Reading, 'readings.csv')
 
 # Close the session
