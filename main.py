@@ -168,8 +168,6 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         rag_prompt = completion_response.choices[0].message.content
 
-        # rag_prompt = ""
-
         details = getUserDetails(user_id)
         
         age = details["age"]
