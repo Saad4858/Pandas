@@ -52,3 +52,8 @@ blackberry_engine = blackberry_index.as_query_engine()
 # mnfsr_pdf = pdf_reader.load_data(file="data/mnfsrpublication.pdf")
 # mnfsr_index = get_index(mnfsr_pdf, "agriculture statistics")
 # mnfsr_engine = mnfsr_index.as_query_engine()
+
+# Load and read the PDF file
+spinach_pdf = pdf_reader.load_data(file="data/Growing and planting spinach_ From sowing to harvesting.pdf")
+spinach_index = get_index(spinach_pdf, "spinach")
+spinach_engine = spinach_index.as_query_engine()

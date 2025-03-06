@@ -1,0 +1,13 @@
+user_agent,access_time,session_id,id,ip_address,time_spent
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",2025-02-16 14:21:57.004358,anonymous,1,::ffff:100.64.0.2,
+"Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_10 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",2025-02-17 10:08:27.939792,anonymous,2,::ffff:100.64.0.3,
+"Mozilla/5.0 (Linux; Android 5.1.1; A37fw) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.74 Mobile Safari/537.36",2025-02-17 10:09:43.259564,anonymous,3,::ffff:100.64.0.4,
+"Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_10 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",2025-02-19 07:39:08.678605,anonymous,4,::ffff:100.64.0.5,
+"Mozilla/5.0 (Linux; Android 5.1.1; A37fw) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.74 Mobile Safari/537.36",2025-02-28 06:30:51.899652,anonymous,5,::ffff:100.64.0.6,
+"Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_10 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",2025-02-28 08:11:47.851293,anonymous,6,::ffff:100.64.0.7,
+"Mozilla/5.0 (Linux; Android 5.1.1; A37fw) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.74 Mobile Safari/537.36",2025-02-28 08:33:00.376195,anonymous,7,::ffff:100.64.0.6,
+"Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",2025-03-03 10:40:48.485286,anonymous,8,::ffff:100.64.0.4,
+"Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)",2025-03-03 10:40:53.767059,anonymous,9,::ffff:100.64.0.6,
+"Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)",2025-03-03 10:40:54.102559,anonymous,10,::ffff:100.64.0.6,
+"Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)",2025-03-03 10:40:54.421095,anonymous,11,::ffff:100.64.0.9,
+"Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_10 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",2025-03-03 10:49:51.103077,anonymous,12,::ffff:100.64.0.6,

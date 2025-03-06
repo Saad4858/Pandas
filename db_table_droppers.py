@@ -1,4 +1,4 @@
-from db_schema import User, Reading, Message, AppUsage, getEngine
+from db_schema import User, Reading, Message, AppUsage, MessageWithTranslation, getEngine
 from sqlalchemy.ext.declarative import declarative_base
 
 # Create an engine
@@ -27,12 +27,21 @@ def drop_app_usage_table(engine):
     Base.metadata.drop_all(engine, tables=[AppUsage.__table__])
     print("Dropped 'app_usage' table.")
 
+# Function to drop the 'app_usage' table
+def drop_message_translation_table(engine):
+    Base.metadata.drop_all(engine, tables=[MessageWithTranslation.__table__])
+    print("Dropped 'app_usage' table.")
 
-# # Drop the 'messages' table
-# drop_messages_table(engine)
 
-# # Drop the 'readings' table
-# drop_readings_table(engine)
+# Drop the 'messages' table
+drop_messages_table(engine)
+
+# Drop the 'readings' table
+drop_readings_table(engine)
+
+drop_app_usage_table(engine)
+
+drop_message_translation_table(engine)
 
 # # Now drop the 'users' table
 # drop_users_table(engine)

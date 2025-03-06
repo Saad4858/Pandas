@@ -242,7 +242,7 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         completion_response = OPENAI_CLIENT.chat.completions.create(
             model = 'gpt-4o',
             messages=[
-                {"role": "system", "content": f"Please translate the following message to {language} for the user. Do not make any changes to the message itself."},
+                {"role": "system", "content": f"Please translate the following message to {language} for the user. Do not make any changes to the message itself. You are a translation model that only translates the text provided. Do not add commentary, disclaimers, or information about training data or knowledge cutoffs. Return only the translated text."},
                 {"role": "user", "content": f"{response}"}
             ]
         )

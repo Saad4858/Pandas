@@ -293,4 +293,7 @@ def updateUserTime(user_id, new_update_time):
     except Exception as e:
         print(f"Error: Could not update update_time. Exception: {e}")
 
-# addUser("Hassan Khan", "Kasur", "9", "Lahore", "Pakistan", "language", "thread_id", "assistant_id", "09:00", "male", "60", "high", "commercial", "sugarcane")
+# addUser("Kabir", "Lahore", "923004329358", "Lahore", "Pakistan", "Urdu", "thread_3TpUkU0UoJhcp7EDl1Vg70AA", "asst_0VXWOSPlPvmOyM14EzLYWvsC", "09:00", "male", "52", "low", "personal use", "green pea")
+# addUser("Mehboob", "Lahore", "923015919844", "Lahore", "Pakistan", "Urdu", "thread_VyONdSzAZ9BFnmLMfugkouQs", "asst_FG4UQzqQeyqhlX3Bfeb2AaV6", "09:00", "male", "45", "low", "personal use", "green pea")
+# addUser("Majid", "Lahore", "923004907501", "Lahore", "Pakistan", "Urdu", "thread_EtQGRB0aZaLmUNB7G64VVRje", "asst_lr8MY3mwPFxPoV66aYpSsPZz", "09:00", "male", "42", "low", "personal use", "green pea")
+# addUser("Amjad", "Lahore", "923134196444", "Lahore", "Pakistan", "Urdu", "thread_pYFZ3y4F7bqouPbqdWMXaGFn", "asst_ewP59HXrjOZBhfJHshYphnbN", "09:00", "male", "44", "low", "personal use", "green pea")

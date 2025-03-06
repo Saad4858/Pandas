@@ -10,7 +10,7 @@ from llama_index.llms.openai import OpenAI
 
 load_dotenv()
 
-from pdf import wheat_engine, cotton_engine, rice_engine, sugercane_engine, blackberry_engine
+from pdf import wheat_engine, cotton_engine, rice_engine, sugercane_engine, blackberry_engine, spinach_engine
 
 
 
@@ -66,6 +66,13 @@ tools = [
         metadata=ToolMetadata(
             name="blackberry_data",
             description="this gives detailed information about the blackberry crop in general and specifically of it being grown in Pakistan",
+        ),
+    ),
+    QueryEngineTool(
+        query_engine=spinach_engine,
+        metadata=ToolMetadata(
+            name="spinach_data",
+            description="this gives detailed information about the spinach crop in general and specifically of it being grown in Pakistan",
         ),
     ),
     # QueryEngineTool(
