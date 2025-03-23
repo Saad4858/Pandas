@@ -10,29 +10,9 @@ from llama_index.llms.openai import OpenAI
 
 load_dotenv()
 
-from pdf import wheat_engine, cotton_engine, rice_engine, sugercane_engine, blackberry_engine, spinach_engine
-
-
-
-
-# population_path = os.path.join("data", "population.csv")
-# population_df = pd.read_csv(population_path)
-
-# population_query_engine = PandasQueryEngine(
-#     df=population_df, verbose=True, instruction_str=instruction_str
-# )
-
-# population_query_engine.update_prompts({"pandas_prompt": new_prompt})
+from index_builder import wheat_engine, cotton_engine, rice_engine, sugarcane_engine, maize_engine, spinach_engine
 
 tools = [
-    # note_engine,
-    # QueryEngineTool(
-    #     query_engine=population_query_engine,
-    #     metadata=ToolMetadata(
-    #         name="population_data",
-    #         description="this gives information at the world population and demographics",
-    #     ),
-    # ),
     QueryEngineTool(
         query_engine=wheat_engine,
         metadata=ToolMetadata(
@@ -55,33 +35,27 @@ tools = [
         ),
     ),
     QueryEngineTool(
-        query_engine=sugercane_engine,
+        query_engine=sugarcane_engine,
         metadata=ToolMetadata(
-            name="sugercane_data",
-            description="this gives detailed information about the sugercane crop in Pakistan",
+            name="sugarcane_data",
+            description="this gives detailed information about the sugarcane crop in Pakistan",
         ),
     ),
     QueryEngineTool(
-        query_engine=blackberry_engine,
+        query_engine=maize_engine,
         metadata=ToolMetadata(
-            name="blackberry_data",
-            description="this gives detailed information about the blackberry crop in general and specifically of it being grown in Pakistan",
+            name="maize_data",
+            description="this gives detailed information about the maize crop in Pakistan",
         ),
     ),
     QueryEngineTool(
         query_engine=spinach_engine,
         metadata=ToolMetadata(
             name="spinach_data",
-            description="this gives detailed information about the spinach crop in general and specifically of it being grown in Pakistan",
+            description="this gives detailed information about the spinach crop in Pakistan",
         ),
-    ),
-    # QueryEngineTool(
-    #     query_engine=mnfsr_engine,
-    #     metadata=ToolMetadata(
-    #         name="agricultural_data",
-    #         description="this gives detailed all encompassing information and statistics about all things agricultural in Pakistan",
-    #     ),
-    # ),
+    )
+    
 ]
 
 context = """Purpose: The primary role of this agent is to assist users by providing accurate 
@@ -89,12 +63,3 @@ context = """Purpose: The primary role of this agent is to assist users by provi
 
 llm = OpenAI(model="gpt-4o")
 agent = ReActAgent.from_tools(tools, llm=llm, verbose=True, context=context)
-
-def getRagResponse(query):
-    result = agent.query(query)
-    return result
-
-
-# while (prompt := input("Enter a prompt (q to quit): ")) != "q":
-#     result = agent.query(prompt)
-#     print(result)
