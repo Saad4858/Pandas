@@ -74,23 +74,10 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
         thread_id,assistant_id, user_id  = getThreadID(phone)
         print(f"Thread: {thread_id} Assistant: {assistant_id} User: {user_id}")
-        # user_id = 1
-        
 
         language = getLanguage(user_id)
-        # print("User Prompt : ", user_prompt)
-        # thread_id = "thread_cDa3oaaAf5nyjDJV1kDs7hxk"
-
-        # print(f"Thread: {thread_id}")
-        # print(f"User id: {user_id}")
 
         records = ""
-
-        # Temporary For LUMS Farm Situation (Shared Sensor Data but Separate Users)
-        # if (user_id == 2 or user_id == 3):
-        #     records = get10ReadingRecords()
-        # else:
-        #     records = get10ReadingRecordsID(user_id)
 
         records = get10ReadingRecords()
 
@@ -121,14 +108,9 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         forecast , six_hour_forecast = get_forecast("Lahore",3)
 
         current_date = datetime.now().date()
-        # print(f"Current Date: {current_date}")
-
-        # context = "Context of the user's farmland"
-        # context  = context +"\n"+"Considering the weather conditions \n" + current_weather_data
-        # context = context + "\n" + six_hour_forecast
 
         translated_user_prompt = user_prompt
-        # print(f"Context: {context}")
+      
         if language != "English":
             completion_response = OPENAI_CLIENT.chat.completions.create(
                 model = 'gpt-4o',
@@ -140,7 +122,6 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
 
             translated_user_prompt = completion_response.choices[0].message.content
 
-        # rag_query = get_rag_query(translated_user_prompt)
 
         schedule = get_schedule(translated_user_prompt)
         time = schedule.time
@@ -179,17 +160,6 @@ async def get_translated_response(user_prompt: str , language: str, phone: str):
         rag_prompt = f"For {crop}: \n" + rag_prompt
         rag_info = agent.query(str(rag_prompt))
 
-        
-        profile = "" 
-
-        if (user_id == 3):
-            profile ="A meticulous and detail-oriented individual, she holds a PhD in Computer Science with a specialization in Human-Computer Interaction. She is an instructor at a prestigious university and applies her rigorous academic mindset to her home farming activities. Growing blackberries in DHA, Lahore, Punjab, Pakistan, she dedicates daily attention to her crop, striving for the highest quality. Her interest in innovative techniques aligns with her commitment to successful and sustainable farming practices. Given her preference for efficiency, she values concise, 2-3 line responses from a chatbot to quickly address her queries and needs. She specifically seeks brief but actionable advice that she can put into practice, ensuring her time is used effectively"
-
-        if (user_id == 1):
-            profile ="A meticulous and detail-oriented individual, she holds a PhD in Computer Science with a specialization in Human-Computer Interaction. She is an instructor at a prestigious university and applies her rigorous academic mindset to her home farming activities. Growing blackberries in DHA, Lahore, Punjab, Pakistan, she dedicates daily attention to her crop, striving for the highest quality. Her interest in innovative techniques aligns with her commitment to successful and sustainable farming practices. Given her preference for efficiency, she values concise, 2-3 line responses from a chatbot to quickly address her queries and needs. She specifically seeks brief but actionable advice that she can put into practice, ensuring her time is used effectively"
-
-        if (user_id == 2):
-            profile ="Prepare a message for a 45-year-old female from a low socio-economic background, farming 5 acres with a focus on maize and rice. Optimize her traditional farming and tube well irrigation practices while improving manual pest control methods. Given her primary education and basic mobile phone usage, ensure the advice is straightforward and practical. Use simple Urdu text messages to communicate ways to enhance soil fertility and manage water efficiently. Highlight strategies to combat frequent floods and limited access to chemical fertilizers. Motivate her to explore drip irrigation given her interest in modern techniques, and clarify the importance of pH balance and soil nutrients for better crop health"
 
         message = OPENAI_CLIENT.beta.threads.messages.create(
         thread_id=thread_id,
