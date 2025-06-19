@@ -268,3 +268,9 @@ Here you can test endpoints directly through the browser using FastAPI’s inter
 | `POST` | `/addReadingRecord` | Submit sensor readings for soil and battery metrics |
 
 > ✅ All input to `/translatedResponseUser` is automatically localized and contextualized using user profile, weather, and sensor readings.
+
+## 🙌 Credits
+
+- 💡 Built as part of the **Kissan-Dost** ecosystem.
+- 🤖 GPT-4o integration by [OpenAI](https://openai.com)
+- 📡 Messaging via [Meta's WhatsApp Cloud API](https://developers.facebook.com/docs/whatsapp)
