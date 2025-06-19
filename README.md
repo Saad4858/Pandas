@@ -271,6 +271,6 @@ Here you can test endpoints directly through the browser using FastAPI’s inter
 
 ## 🙌 Credits
 
-- 💡 Built as part of the **Kissan-Dost** ecosystem.
+- 💡 Built as part of the **Kissan-Dost** ecosystem. ([`Agri-Chat`](https://github.com/DaaniKhan/Agri-Chat)), (['Agri-Dash'](https://github.com/DaaniKhan/Agri-Dash))
 - 🤖 GPT-4o integration by [OpenAI](https://openai.com)
 - 📡 Messaging via [Meta's WhatsApp Cloud API](https://developers.facebook.com/docs/whatsapp)
