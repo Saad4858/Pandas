@@ -57,8 +57,8 @@ We used WhatsApp for end user delivery, however that is optional and completely 
 ### 1️. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/kissan-dost.git
-cd kissan-dost
+git clone https://github.com/Saad4858/Pandas.git
+cd Pandas
 ```
 
 ### 2️. Install Dependencies
