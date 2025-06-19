@@ -2,9 +2,13 @@ import requests
 
 import json 
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
-weather_api_key = "9d2eb6145f744e3e81c70537241708"
+weather_api_key = os.getenv("WEATHER_API_KEY")
+
 base_url = "http://api.weatherapi.com/v1"
 
 def get_current_weather_data(city):

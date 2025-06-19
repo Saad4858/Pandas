@@ -54,14 +54,14 @@ We used WhatsApp for end user delivery, however that is optional and completely 
 
 ## 🚀 Getting Started
 
-### 1️⃣ Clone the Repository
+### 1️. Clone the Repository
 
 ```bash
 git clone https://github.com/yourusername/kissan-dost.git
 cd kissan-dost
 ```
 
-### 2️⃣ Install Dependencies
+### 2️. Install Dependencies
 
 Make sure you have Python 3.9+ installed. Then install the required packages using pip:
 
@@ -69,7 +69,7 @@ Make sure you have Python 3.9+ installed. Then install the required packages usi
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Set Up Environment Variables
+### 3️. Set Up Environment Variables
 
 Create a `.env` file in the root of the project with the following content:
 
@@ -85,15 +85,19 @@ DB_NAME=kissanDost
 # OpenAI API
 OPENAI_API_KEY=your_api_key
 
+# Weather API
+WEATHER_API_KEY=your_api_key
+
 # WhatsApp Cloud API (If using)
 WHATSAPP_BEARER=your_bearer_token
 ```
+For the weather api we used: https://www.weatherapi.com/
 
 ---
 
 ## 🗃️ Database Setup & Sample Data
 
-### 5️⃣ Create the Database Tables
+### 4. Create the Database Tables
 
 Ensure your PostgreSQL (or preferred SQL database) is running and matches the credentials in `.env`.
 
@@ -112,7 +116,7 @@ This will create the following tables:
 
 ---
 
-### 6️⃣ Populate the Database with Sample Sensor Readings
+### 5. Populate the Database with Sample Sensor Readings
 
 A sample dataset is provided in `readings.csv`. You can load it into the database using this script:
 
@@ -128,11 +132,13 @@ for _, row in df.iterrows():
     )
 ```
 
-> 📌 Make sure that the `user_id` values in `readings.csv` correspond to actual users in the `users` table. You may need to manually add test users using the `addUser()` function from `db_controllers.py`.
+> Make sure that the `user_id` values in `readings.csv` correspond to actual users in the `users` table. 
+
+> You may need to manually add test users using the `addUser()` function from `db_controllers.py` 
 
 ---
 
-### 7️⃣ Export Data to CSV (Optional)
+### 6. Export Data to CSV (Optional)
 
 If you want to, you can dump your database contents to CSV files:
 
@@ -151,31 +157,31 @@ This will generate:
 
 ## 📚 RAG Indexing & Market Scraping
 
-### 8️⃣ Add Crop Policy Documents
+### 7. Add Crop Policy Documents
 
 To enable Retrieval-Augmented Generation (RAG), place relevant PDF files into the following directory structure:
 
 ```
 data/
 ├── wheat/
-│   └── Wheat Policy Analysis For 2023-24 Crop.pdf
+│   └── (Add wheat PDFs here)
 ├── rice/
-│   └── Rice Policy 2022-23.pdf
+│   └── (Add rice PDFs here)
 ├── cotton/
-│   └── Cotton Policy Analysis For 2022-23 Crop.pdf
+│   └── (Add cotton PDFs here)
 ├── sugarcane/
-│   └── (Add sugarcane PDF here)
+│   └── (Add sugarcane PDFs here)
 ├── maize/
-│   └── (Add maize PDF here)
+│   └── (Add maize PDFs here)
 ├── spinach/
-│   └── (Add spinach PDF here)
+│   └── (Add spinach PDFs here)
 ```
 
-Each folder should contain at least one `.pdf` file for that crop.
+Each folder should contain at least one `.pdf` file for that crop. Files have already been provided in these folders.
 
 ---
 
-### 9️⃣ Build the RAG Indexes
+### 8. Build the RAG Indexes
 
 Run the following script to process all crop PDFs and create persistent vector indexes:
 
@@ -191,7 +197,7 @@ This uses `llama-index` to convert documents into searchable embeddings for the 
 
 ## 📊 Market Price Scraping (Optional)
 
-### 🔟 Scrape Daily Crop Prices from AMIS Pakistan
+### 9. Scrape Daily Crop Prices from AMIS Pakistan
 
 Run the following script to fetch crop market data for different cities from [AMIS.pk](http://amis.pk):
 
@@ -223,7 +229,7 @@ You can use this to supplement GPT responses or visualize trends.
 
 ---
 
-## ▶️ Running and Using the App
+## ▶️ Running and Using the App (Locally)
 
 ### 1️⃣ Start the FastAPI Server
 
